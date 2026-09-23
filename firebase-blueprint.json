@@ -1,0 +1,231 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with demographic information, settings, and stats",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "provider": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" },
+        "lastSeen": { "type": "string", "format": "date-time" },
+        "language": { "type": "string" },
+        "state": { "type": "string" },
+        "district": { "type": "string" },
+        "occupation": { "type": "string" },
+        "annualIncome": { "type": "number" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "disability": { "type": "boolean" },
+        "profileCompleted": { "type": "boolean" },
+        "eligibilityCount": { "type": "number" },
+        "savedSchemesCount": { "type": "number" }
+      },
+      "required": ["uid", "createdAt"]
+    },
+    "Scheme": {
+      "title": "Scheme",
+      "description": "Government welfare scheme catalog entry",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "schemeName": { "type": "string" },
+        "category": { "type": "string" },
+        "state": { "type": "string" },
+        "department": { "type": "string" },
+        "ministry": { "type": "string" },
+        "description": { "type": "string" },
+        "short_description": { "type": "string" },
+        "benefits": { "type": "string" },
+        "apply_url": { "type": "string" },
+        "officialWebsite": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "popular": { "type": "boolean" }
+      },
+      "required": ["name", "category"]
+    },
+    "SavedScheme": {
+      "title": "Saved Scheme",
+      "description": "Individual scheme bookmarked by user",
+      "type": "object",
+      "properties": {
+        "schemeId": { "type": "string" },
+        "schemeName": { "type": "string" },
+        "status": { "type": "string" },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schemeId"]
+    },
+    "SavedResult": {
+      "title": "Saved Results",
+      "description": "User questionnaire evaluation result set",
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "profile": { "type": "object" },
+        "scheme_ids": { "type": "array", "items": { "type": "string" } },
+        "signature": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["profile", "scheme_ids"]
+    },
+    "EligibilityHistory": {
+      "title": "Eligibility Check History",
+      "description": "Log entry of an eligibility check questionnaire execution",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "answers": { "type": "object" },
+        "eligibleSchemes": { "type": "array", "items": { "type": "string" } },
+        "state": { "type": "string" },
+        "occupation": { "type": "string" },
+        "income": { "type": "number" },
+        "age": { "type": "number" }
+      },
+      "required": ["timestamp", "answers"]
+    },
+    "RecentScheme": {
+      "title": "Recent Scheme",
+      "description": "Scheme recently viewed by the user",
+      "type": "object",
+      "properties": {
+        "schemeId": { "type": "string" },
+        "schemeName": { "type": "string" },
+        "viewedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schemeId", "viewedAt"]
+    },
+    "SearchHistory": {
+      "title": "Search History",
+      "description": "User scheme catalog search query",
+      "type": "object",
+      "properties": {
+        "query": { "type": "string" },
+        "filters": { "type": "object" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["timestamp"]
+    },
+    "Occupation": {
+      "title": "Occupation",
+      "description": "Recognized occupation category",
+      "type": "object",
+      "properties": {
+        "occupationName": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["occupationName"]
+    },
+    "Analytics": {
+      "title": "Analytics",
+      "description": "Global statistics and counts",
+      "type": "object",
+      "properties": {
+        "totalUsers": { "type": "number" },
+        "dailyVisitors": { "type": "number" },
+        "totalEligibilityChecks": { "type": "number" }
+      }
+    },
+    "ValidationJob": {
+      "title": "Validation Job",
+      "description": "Metadata for automated verification jobs",
+      "type": "object",
+      "properties": {
+        "job_name": { "type": "string" },
+        "last_run_at": { "type": "string" },
+        "last_finished_at": { "type": "string" },
+        "checked_last_run": { "type": "number" },
+        "paused": { "type": "boolean" },
+        "paused_reason": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "entity": "User",
+      "description": "User profile documents",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/users/{userId}/savedSchemes/{schemeId}": {
+      "entity": "SavedScheme",
+      "description": "User's saved/bookmarked schemes",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/users/{userId}/savedResults/{resultId}": {
+      "entity": "SavedResult",
+      "description": "User's saved eligibility questionnaire evaluations",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/users/{userId}/recentSchemes/{schemeId}": {
+      "entity": "RecentScheme",
+      "description": "Recently viewed schemes for the user",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/users/{userId}/searchHistory/{searchId}": {
+      "entity": "SearchHistory",
+      "description": "User search queries",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/users/{userId}/eligibilityHistory/{checkId}": {
+      "entity": "EligibilityHistory",
+      "description": "User's eligibility check log history",
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "write": "request.auth != null && request.auth.uid == userId"
+      }
+    },
+    "/schemes/{schemeId}": {
+      "entity": "Scheme",
+      "description": "All government welfare schemes in the catalog",
+      "rules": {
+        "read": "true",
+        "write": "true"
+      }
+    },
+    "/occupations/{occupationId}": {
+      "entity": "Occupation",
+      "description": "Occupations catalog",
+      "rules": {
+        "read": "true",
+        "write": "true"
+      }
+    },
+    "/analytics/{docId}": {
+      "entity": "Analytics",
+      "description": "Aggregated application analytics and counter stats",
+      "rules": {
+        "read": "true",
+        "write": "true"
+      }
+    },
+    "/jobs/{jobId}": {
+      "entity": "ValidationJob",
+      "description": "Background validation jobs metadata",
+      "rules": {
+        "read": "true",
+        "write": "true"
+      }
+    }
+  }
+}
