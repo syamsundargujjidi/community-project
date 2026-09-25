@@ -44,7 +44,8 @@ export const Route = createFileRoute("/database")({
       { title: "Admin Scheme Management & Database — Scheme Sathi AI" },
       {
         name: "description",
-        content: "Admin portal to add, update, verify official links, and monitor 4,000+ government welfare schemes.",
+        content:
+          "Admin portal to add, update, verify official links, and monitor 4,000+ government welfare schemes.",
       },
       { name: "robots", content: "noindex" },
     ],
@@ -54,12 +55,15 @@ export const Route = createFileRoute("/database")({
 
 function DatabaseDashboard() {
   const { user } = useAuth();
-  const isAdmin = user && (user.email === ADMIN_EMAIL || user.email?.endsWith("@admin.schemesathi.gov.in"));
+  const isAdmin =
+    user && (user.email === ADMIN_EMAIL || user.email?.endsWith("@admin.schemesathi.gov.in"));
 
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [selectedState, setSelectedState] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<"all" | "working" | "fallback" | "broken" | "unverified">("all");
+  const [selectedStatus, setSelectedStatus] = useState<
+    "all" | "working" | "fallback" | "broken" | "unverified"
+  >("all");
   const [editingScheme, setEditingScheme] = useState<Scheme | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
@@ -74,7 +78,11 @@ function DatabaseDashboard() {
   });
 
   // Schemes table query
-  const { data: schemesResult, refetch: refetchSchemes, isLoading } = useQuery({
+  const {
+    data: schemesResult,
+    refetch: refetchSchemes,
+    isLoading,
+  } = useQuery({
     queryKey: ["admin-schemes", q, page, selectedState, selectedStatus],
     queryFn: async () => {
       return await getPaginatedSchemesServer({
@@ -102,7 +110,8 @@ function DatabaseDashboard() {
     setVerifyingId(s.id);
     try {
       const res = await adminVerifyLinkFn({ data: { url } });
-      const newStatus = res.status === "ok" ? "working" : res.status === "invalid" ? "broken" : "fallback";
+      const newStatus =
+        res.status === "ok" ? "working" : res.status === "invalid" ? "broken" : "fallback";
       await adminUpdateSchemeFn({
         data: {
           schemeId: s.id,
@@ -223,7 +232,8 @@ function DatabaseDashboard() {
             4,000+ Government Schemes Master Repository
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Authoritative database management: add, edit, re-verify official government links, and toggle active status.
+            Authoritative database management: add, edit, re-verify official government links, and
+            toggle active status.
           </p>
         </div>
 
@@ -263,7 +273,9 @@ function DatabaseDashboard() {
       {/* KPI Cards */}
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="card-elevated p-5 border border-border/80 rounded-2xl bg-card">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Stored Schemes</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Total Stored Schemes
+          </p>
           <p className="mt-2 font-display text-3xl font-bold text-foreground">
             {stats?.total ? stats.total.toLocaleString("en-IN") : "4,040"}
           </p>
@@ -271,31 +283,44 @@ function DatabaseDashboard() {
         </div>
 
         <div className="card-elevated p-5 border border-border/80 rounded-2xl bg-card">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Central vs State</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Central vs State
+          </p>
           <p className="mt-2 font-display text-2xl font-bold text-foreground">
             {stats?.central ?? 80} Central / {stats?.state ?? 3560} State
           </p>
-          <p className="mt-1 text-[11px] text-muted-foreground">{stats?.ut ?? 400} Union Territory programs</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            {stats?.ut ?? 400} Union Territory programs
+          </p>
         </div>
 
         <div className="card-elevated p-5 border border-border/80 rounded-2xl bg-card">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Official Government URLs</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Official Government URLs
+          </p>
           <div className="mt-2 flex items-center gap-2">
             <span className="inline-flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400 text-xl">
-              <CheckCircle2 className="h-5 w-5" /> {stats?.working ? stats.working.toLocaleString("en-IN") : "4,040"}
+              <CheckCircle2 className="h-5 w-5" />{" "}
+              {stats?.working ? stats.working.toLocaleString("en-IN") : "4,040"}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">.gov.in & .nic.in official state portals</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            .gov.in & .nic.in official state portals
+          </p>
         </div>
 
         <div className="card-elevated p-5 border border-border/80 rounded-2xl bg-card">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">myScheme Fallbacks</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            myScheme Fallbacks
+          </p>
           <div className="mt-2 flex items-center gap-2">
             <span className="inline-flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 text-xl">
               <ExternalLink className="h-5 w-5" /> Active Fallback
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">Automated fallback for broken portals</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Automated fallback for broken portals
+          </p>
         </div>
       </div>
 
@@ -437,7 +462,9 @@ function DatabaseDashboard() {
                           title="Re-verify Official URL"
                           className="rounded-lg border border-input p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition disabled:opacity-40"
                         >
-                          <RefreshCw className={`h-3.5 w-3.5 ${verifyingId === s.id ? "animate-spin text-primary" : ""}`} />
+                          <RefreshCw
+                            className={`h-3.5 w-3.5 ${verifyingId === s.id ? "animate-spin text-primary" : ""}`}
+                          />
                         </button>
 
                         {isAdmin && (
@@ -453,7 +480,9 @@ function DatabaseDashboard() {
                               onClick={() => handleToggleStatus(s)}
                               title={isAct ? "Disable scheme" : "Enable scheme"}
                               className={`rounded-lg border border-input px-2 py-1 text-[10px] font-bold transition ${
-                                isAct ? "text-amber-600 hover:bg-amber-50" : "text-emerald-600 hover:bg-emerald-50"
+                                isAct
+                                  ? "text-amber-600 hover:bg-amber-50"
+                                  : "text-emerald-600 hover:bg-emerald-50"
                               }`}
                             >
                               {isAct ? "Disable" : "Enable"}
@@ -474,7 +503,8 @@ function DatabaseDashboard() {
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
           <div>
-            Showing {(page - 1) * 15 + 1}–{Math.min(page * 15, total)} of {total.toLocaleString("en-IN")} schemes
+            Showing {(page - 1) * 15 + 1}–{Math.min(page * 15, total)} of{" "}
+            {total.toLocaleString("en-IN")} schemes
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -509,10 +539,7 @@ function DatabaseDashboard() {
 
       {/* Add New Scheme Modal */}
       {isAddingNew && (
-        <SchemeAddModal
-          onClose={() => setIsAddingNew(false)}
-          onAdd={handleAddNewScheme}
-        />
+        <SchemeAddModal onClose={() => setIsAddingNew(false)} onAdd={handleAddNewScheme} />
       )}
     </section>
   );
@@ -528,7 +555,9 @@ function SchemeEditModal({
   onSave: (updates: Partial<Scheme>) => void;
 }) {
   const [name, setName] = useState(scheme.name);
-  const [officialUrl, setOfficialUrl] = useState(scheme.official_source_url || scheme.official_website || scheme.apply_url || "");
+  const [officialUrl, setOfficialUrl] = useState(
+    scheme.official_source_url || scheme.official_website || scheme.apply_url || "",
+  );
   const [fallbackUrl, setFallbackUrl] = useState(scheme.fallbackUrl || "");
   const [category, setCategory] = useState(scheme.category);
   const [ministry, setMinistry] = useState(scheme.ministry || "");
@@ -596,7 +625,9 @@ function SchemeEditModal({
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Official Government Portal URL (.gov.in / .nic.in)</label>
+            <label className="font-semibold text-foreground">
+              Official Government Portal URL (.gov.in / .nic.in)
+            </label>
             <input
               value={officialUrl}
               onChange={(e) => setOfficialUrl(e.target.value)}
@@ -689,7 +720,10 @@ function SchemeAddModal({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
     const id = `sch-${slug}`;
     const newScheme = {
       schemeId: id,
@@ -796,7 +830,9 @@ function SchemeAddModal({
                 <option value="Business & MSME">Business & MSME</option>
                 <option value="Housing & Shelter">Housing & Shelter</option>
                 <option value="Disability & Inclusion">Disability & Inclusion</option>
-                <option value="Employment & Skill Development">Employment & Skill Development</option>
+                <option value="Employment & Skill Development">
+                  Employment & Skill Development
+                </option>
                 <option value="SC/ST/OBC Welfare">SC/ST/OBC Welfare</option>
                 <option value="Financial Assistance">Financial Assistance</option>
               </select>
@@ -833,7 +869,9 @@ function SchemeAddModal({
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Official Government Portal URL *</label>
+            <label className="font-semibold text-foreground">
+              Official Government Portal URL *
+            </label>
             <input
               value={officialUrl}
               onChange={(e) => setOfficialUrl(e.target.value)}

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Scheme, UserProfile } from "./schemes";
 import { checkOfficialLink } from "./link-check.server";
+import { DEFAULT_SCHEMES } from "./default-schemes";
 
 export type SchemeFilterParams = {
   q?: string;
@@ -45,26 +46,37 @@ let bySlugMap = new Map<string, Scheme>();
 let customAdminOverrides = new Map<string, Partial<Scheme>>();
 
 function loadCatalog(): Scheme[] {
-  if (cachedSchemes) return cachedSchemes;
+  if (cachedSchemes && cachedSchemes.length > 0) return cachedSchemes;
   try {
     const filePath = path.resolve(process.cwd(), "src/data/schemes-catalog.json");
     if (fs.existsSync(filePath)) {
       const raw = fs.readFileSync(filePath, "utf-8");
       const list = JSON.parse(raw) as Scheme[];
-      byIdMap.clear();
-      bySlugMap.clear();
-      for (const s of list) {
-        const key = s.id || s.slug;
-        byIdMap.set(s.id, s);
-        if (s.slug) bySlugMap.set(s.slug, s);
+      if (Array.isArray(list) && list.length > 0) {
+        byIdMap.clear();
+        bySlugMap.clear();
+        for (const s of list) {
+          const key = s.id || s.slug;
+          byIdMap.set(s.id, s);
+          if (s.slug) bySlugMap.set(s.slug, s);
+        }
+        cachedSchemes = list;
+        return list;
       }
-      cachedSchemes = list;
-      return list;
     }
   } catch (err) {
     console.error("[schemes-db] Error loading schemes-catalog.json:", err);
   }
-  return [];
+  // Fallback to in-memory DEFAULT_SCHEMES
+  byIdMap.clear();
+  bySlugMap.clear();
+  for (const s of DEFAULT_SCHEMES) {
+    const key = s.id || s.slug;
+    byIdMap.set(s.id, s);
+    if (s.slug) bySlugMap.set(s.slug, s);
+  }
+  cachedSchemes = DEFAULT_SCHEMES;
+  return DEFAULT_SCHEMES;
 }
 
 export function getAllSchemes(): Scheme[] {
@@ -257,7 +269,18 @@ export function searchSchemes(params: SchemeFilterParams): PaginatedResult<Schem
       if (params.state === "Central") {
         if (s.state) return false;
       } else {
-        if (s.state !== params.state) return false;
+        // When a state (e.g. Andhra Pradesh) is selected:
+        // If user specifically requested "State" only: only schemes belonging to that state
+        // If user selected "all" or default: include that state schemes PLUS Central schemes available in that state
+        if (params.governmentLevel === "State") {
+          if (s.state !== params.state) return false;
+        } else if (params.governmentLevel === "Central") {
+          if (s.state) return false;
+        } else {
+          const isOwnState = s.state && s.state.toLowerCase() === params.state.toLowerCase();
+          const isCentralScheme = !s.state || s.government_level === "Central";
+          if (!isOwnState && !isCentralScheme) return false;
+        }
       }
     }
 
@@ -324,6 +347,12 @@ export function searchSchemes(params: SchemeFilterParams): PaginatedResult<Schem
 
   // Sorting
   filtered.sort((a, b) => {
+    // If a specific state is selected, place that state's schemes first before Central
+    if (params.state && params.state !== "Central") {
+      const aIsState = a.state && a.state.toLowerCase() === params.state.toLowerCase() ? 1 : 0;
+      const bIsState = b.state && b.state.toLowerCase() === params.state.toLowerCase() ? 1 : 0;
+      if (aIsState !== bIsState) return bIsState - aIsState;
+    }
     if (params.sortBy === "name") return a.name.localeCompare(b.name);
     if (params.sortBy === "category") return a.category.localeCompare(b.category);
     if (params.sortBy === "state")

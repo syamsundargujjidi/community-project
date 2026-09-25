@@ -280,7 +280,9 @@ function Home() {
             {popular.map((s) => {
               const offUrl = s.official_source_url || s.official_website || s.apply_url;
               const isOfficial = !!offUrl && !offUrl.includes("myscheme.gov.in");
-              const targetUrl = isOfficial ? offUrl : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
+              const targetUrl = isOfficial
+                ? offUrl
+                : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
               return (
                 <article
                   key={s.id}
@@ -297,7 +299,9 @@ function Home() {
                       </span>
                     </div>
                     {s.ministry && (
-                      <span className="mt-2 text-xs text-muted-foreground line-clamp-1 block">{s.ministry}</span>
+                      <span className="mt-2 text-xs text-muted-foreground line-clamp-1 block">
+                        {s.ministry}
+                      </span>
                     )}
                     <h3 className="mt-2 font-display text-lg font-bold">{s.name}</h3>
                     <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">

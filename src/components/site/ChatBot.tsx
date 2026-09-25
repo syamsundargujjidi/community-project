@@ -10,7 +10,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { chatWithAssistant } from "@/lib/ai.functions";
+import { chatWithAssistant } from "@/lib/ai.server";
 import { LANGUAGE_NAMES } from "@/i18n";
 
 type SchemeRec = {

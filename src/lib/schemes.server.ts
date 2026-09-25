@@ -93,40 +93,46 @@ export const adminVerifyLinkFn = createServerFn({ method: "POST" })
     return checkOfficialLink(data.url);
   });
 
-export const getCatalogOverviewStats = createServerFn({ method: "GET" })
-  .handler(async () => {
-    const all = getAllSchemes();
-    let central = 0;
-    let stateCount = 0;
-    let utCount = 0;
-    let working = 0;
-    let fallback = 0;
-    const catMap = new Map<string, number>();
-    const stateMap = new Map<string, number>();
+export const getCatalogOverviewStats = createServerFn({ method: "GET" }).handler(async () => {
+  const all = getAllSchemes();
+  let central = 0;
+  let stateCount = 0;
+  let utCount = 0;
+  let working = 0;
+  let fallback = 0;
+  const catMap = new Map<string, number>();
+  const stateMap = new Map<string, number>();
 
-    for (const s of all) {
-      if (!s.state) central++;
-      else if (s.government_level === "UT") utCount++;
-      else stateCount++;
+  for (const s of all) {
+    if (!s.state) central++;
+    else if (s.government_level === "UT") utCount++;
+    else stateCount++;
 
-      catMap.set(s.category, (catMap.get(s.category) || 0) + 1);
-      if (s.state) stateMap.set(s.state, (stateMap.get(s.state) || 0) + 1);
+    catMap.set(s.category, (catMap.get(s.category) || 0) + 1);
+    if (s.state) stateMap.set(s.state, (stateMap.get(s.state) || 0) + 1);
 
-      if (s.link_status === "fallback" || (!s.official_website && s.apply_url?.includes("myscheme"))) {
-        fallback++;
-      } else {
-        working++;
-      }
+    if (
+      s.link_status === "fallback" ||
+      (!s.official_website && s.apply_url?.includes("myscheme"))
+    ) {
+      fallback++;
+    } else {
+      working++;
     }
+  }
 
-    return {
-      total: all.length,
-      central,
-      state: stateCount,
-      ut: utCount,
-      working,
-      fallback,
-      categories: Array.from(catMap.entries()).map(([k, v]) => ({ name: k, count: v })),
-      states: Array.from(stateMap.entries()).map(([k, v]) => ({ name: k, count: v })),
-    };
-  });
+  return {
+    total: all.length,
+    central,
+    state: stateCount,
+    ut: utCount,
+    working,
+    fallback,
+    categories: Array.from(catMap.entries()).map(([k, v]) => ({ name: k, count: v })),
+    states: Array.from(stateMap.entries()).map(([k, v]) => ({ name: k, count: v })),
+  };
+});
+
+export const getAllCatalogSchemesServer = createServerFn({ method: "GET" }).handler(async () => {
+  return getAllSchemes();
+});

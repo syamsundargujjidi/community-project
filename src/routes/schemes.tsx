@@ -16,11 +16,20 @@ import {
   FileCheck2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { INDIAN_STATES, type Scheme } from "@/lib/schemes";
+import { INDIAN_STATES, resolveSchemeLinks, type Scheme, type UserProfile } from "@/lib/schemes";
+import { evaluateScheme } from "@/lib/matching";
 import { AuthGate } from "@/components/site/AuthGate";
 import { useAuth } from "@/hooks/use-auth";
 import { saveScheme, trackRecentScheme, trackSearch } from "@/integrations/firebase/user-store";
 import { getPaginatedSchemesServer } from "@/lib/schemes.server";
+
+function SchemesRouteComponent() {
+  return (
+    <AuthGate feature="the schemes catalog">
+      <SchemesPage />
+    </AuthGate>
+  );
+}
 
 export const Route = createFileRoute("/schemes")({
   ssr: false,
@@ -29,7 +38,8 @@ export const Route = createFileRoute("/schemes")({
       { title: "Browse 4,000+ Government Schemes — Scheme Sathi AI" },
       {
         name: "description",
-        content: "Explore over 4,000 Central & State government welfare schemes with official application links and verified myScheme fallbacks.",
+        content:
+          "Explore over 4,000 Central & State government welfare schemes with official application links and verified myScheme fallbacks.",
       },
       { property: "og:title", content: "Browse 4,000+ Government Schemes — Scheme Sathi AI" },
       {
@@ -38,11 +48,7 @@ export const Route = createFileRoute("/schemes")({
       },
     ],
   }),
-  component: () => (
-    <AuthGate feature="the schemes catalog">
-      <SchemesPage />
-    </AuthGate>
-  ),
+  component: SchemesRouteComponent,
 });
 
 const POPULAR_SEARCH_PROMPTS = [
@@ -86,6 +92,15 @@ function SchemesPage() {
   const [page, setPage] = useState<number>(1);
   const pageSize = 12;
 
+  // Load user profile from questionnaire / session to evaluate live card eligibility
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("yojana:profile");
+      if (raw) setProfile(JSON.parse(raw));
+    } catch {}
+  }, []);
+
   // Debounce search query
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -99,13 +114,21 @@ function SchemesPage() {
   useEffect(() => {
     if (!user || !debouncedQ) return;
     const h = setTimeout(() => {
-      trackSearch(user.uid, debouncedQ, { category: selectedCategory, scope, state: selectedState });
+      trackSearch(user.uid, debouncedQ, {
+        category: selectedCategory,
+        scope,
+        state: selectedState,
+      });
     }, 1000);
     return () => clearTimeout(h);
   }, [user, debouncedQ, selectedCategory, scope, selectedState]);
 
   // Query paginated schemes from server database
-  const { data: pageResult, isLoading, isPlaceholderData } = useQuery({
+  const {
+    data: pageResult,
+    isLoading,
+    isPlaceholderData,
+  } = useQuery({
     queryKey: [
       "schemes-paginated",
       debouncedQ,
@@ -168,7 +191,11 @@ function SchemesPage() {
         </div>
 
         {/* Quick Reset */}
-        {(debouncedQ || selectedCategory !== "all" || scope !== "all" || selectedState || selectedOccupation !== "all") && (
+        {(debouncedQ ||
+          selectedCategory !== "all" ||
+          scope !== "all" ||
+          selectedState ||
+          selectedOccupation !== "all") && (
           <button
             onClick={resetAllFilters}
             className="inline-flex items-center gap-1.5 self-start md:self-auto rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition"
@@ -186,7 +213,10 @@ function SchemesPage() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder={t("schemes.searchPlaceholder", "Search by scheme name, ministry, benefits, or keywords (e.g. 'PM-KISAN', 'scholarships', 'women loans')...")}
+            placeholder={t(
+              "schemes.searchPlaceholder",
+              "Search by scheme name, ministry, benefits, or keywords (e.g. 'PM-KISAN', 'scholarships', 'women loans')...",
+            )}
             className="w-full rounded-2xl border border-input bg-card py-3.5 pl-12 pr-4 text-sm shadow-xs outline-none focus:border-ring focus:ring-2 focus:ring-ring/20 transition text-foreground"
           />
         </div>
@@ -221,7 +251,8 @@ function SchemesPage() {
             setPage(1);
           }}
         >
-          {t("schemes.all", "All Schemes")} ({pageResult?.stats.total ? pageResult.stats.total.toLocaleString("en-IN") : "4,000+"})
+          {t("schemes.all", "All Schemes")} (
+          {pageResult?.stats.total ? pageResult.stats.total.toLocaleString("en-IN") : "4,000+"})
         </FilterChip>
         <FilterChip
           active={scope === "Central"}
@@ -267,7 +298,8 @@ function SchemesPage() {
               className="w-full sm:w-60 rounded-xl border border-input bg-card px-3 py-2 text-xs font-medium text-foreground outline-none focus:border-ring"
             >
               <option value="">All States & Union Territories (36)</option>
-              {INDIAN_STATES.map((st) => (
+              <option value="Andhra Pradesh">🌟 Andhra Pradesh (AP State + Central Schemes)</option>
+              {INDIAN_STATES.filter((s) => s !== "Andhra Pradesh").map((st) => (
                 <option key={st} value={st}>
                   {st}
                 </option>
@@ -340,7 +372,7 @@ function SchemesPage() {
         <>
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {schemes.map((s) => (
-              <SchemeCard key={s.id || s.slug} scheme={s} />
+              <SchemeCard key={s.id || s.slug} scheme={s} profile={profile} />
             ))}
           </div>
 
@@ -412,9 +444,12 @@ function SchemesPage() {
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary text-muted-foreground">
             <Search className="h-6 w-6" />
           </div>
-          <h3 className="mt-4 font-display text-xl font-bold">No schemes found matching your criteria</h3>
+          <h3 className="mt-4 font-display text-xl font-bold">
+            No schemes found matching your criteria
+          </h3>
           <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-            Try adjusting your search terms, clearing selected state/category filters, or browse across all government schemes.
+            Try adjusting your search terms, clearing selected state/category filters, or browse
+            across all government schemes.
           </p>
           <button
             onClick={resetAllFilters}
@@ -429,22 +464,26 @@ function SchemesPage() {
   );
 }
 
-function SchemeCard({ scheme }: { scheme: Scheme }) {
+function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile | null }) {
   const { t } = useTranslation();
   const { user } = useAuth();
   const [saved, setSaved] = useState(false);
+  const [showDocs, setShowDocs] = useState(false);
 
-  // Link validation & myScheme fallback logic
-  const officialUrl = scheme.official_source_url || scheme.official_website || scheme.apply_url;
-  const isOfficialWorking = officialUrl && /^https?:\/\//i.test(officialUrl) && !officialUrl.includes("myscheme.gov.in");
+  // Link validation & verified fallback logic
+  const links = resolveSchemeLinks(scheme);
 
-  const targetUrl = isOfficialWorking
-    ? officialUrl
-    : scheme.fallbackUrl || `https://www.myscheme.gov.in/search?q=${encodeURIComponent(scheme.name)}`;
+  const lastVerifiedStr = formatDate(
+    scheme.last_verified || scheme.lastVerified || scheme.created_at,
+  );
 
-  const isOfficial = isOfficialWorking && scheme.link_status !== "invalid" && scheme.link_status !== "broken";
+  const sourceTitle = links.departmentName;
 
-  const lastVerifiedStr = formatDate(scheme.last_verified || scheme.lastVerified || scheme.created_at);
+  // Profile-driven eligibility check
+  const match = useMemo(() => {
+    if (!profile) return null;
+    return evaluateScheme(scheme, profile);
+  }, [scheme, profile]);
 
   async function handleSave(e: React.MouseEvent) {
     e.preventDefault();
@@ -461,6 +500,33 @@ function SchemeCard({ scheme }: { scheme: Scheme }) {
   return (
     <article className="card-elevated flex flex-col justify-between p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg border border-border/80 bg-card rounded-2xl">
       <div>
+        {/* Profile-aware live eligibility banner */}
+        {match && (
+          <div className="mb-3">
+            {match.status === "eligible" ? (
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 flex items-center justify-between">
+                <span className="flex items-center gap-1">
+                  <Check className="h-3.5 w-3.5" /> Eligible for your profile
+                </span>
+                <span>{match.confidence}% match</span>
+              </div>
+            ) : match.status === "verify" ? (
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-semibold text-amber-700 dark:text-amber-400 flex items-center gap-1">
+                <span>⚠️ Needs documentation verification</span>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-destructive/30 bg-destructive/10 p-2.5 text-xs font-semibold text-destructive">
+                <div className="flex items-center gap-1">
+                  <span>❌ Not eligible</span>
+                </div>
+                <p className="mt-1 text-[11px] font-normal text-foreground/90">
+                  {match.failures[0] || "Profile criteria not satisfied."}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Badges: Category + Level/State */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
@@ -469,24 +535,27 @@ function SchemeCard({ scheme }: { scheme: Scheme }) {
           <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
             {scheme.state ? `${scheme.state}` : t("schemes.central", "Central")}
           </span>
+          <span className="ml-auto text-[11px] text-muted-foreground font-medium">
+            {sourceTitle}
+          </span>
         </div>
 
-        {/* Source indicator */}
+        {/* Source indicator & verification date */}
         <div className="mt-3 flex items-center justify-between text-[11px]">
           <span
             className={`inline-flex items-center gap-1 font-semibold ${
-              isOfficial ? "text-emerald-600 dark:text-emerald-400" : "text-blue-600 dark:text-blue-400"
+              isOfficial
+                ? "text-emerald-600 dark:text-emerald-400"
+                : "text-blue-600 dark:text-blue-400"
             }`}
           >
             {isOfficial ? (
               <>
-                <ShieldCheck className="h-3.5 w-3.5" />
-                ✓ Official Government Source
+                <ShieldCheck className="h-3.5 w-3.5" />✓ Official Government Source
               </>
             ) : (
               <>
-                <ExternalLink className="h-3.5 w-3.5" />
-                ↗ myScheme Government Source
+                <ExternalLink className="h-3.5 w-3.5" />↗ myScheme Government Source
               </>
             )}
           </span>
@@ -496,10 +565,10 @@ function SchemeCard({ scheme }: { scheme: Scheme }) {
         </div>
 
         {/* Ministry or Department */}
-        {scheme.ministry && (
+        {(scheme.ministry || scheme.department) && (
           <p className="mt-2 line-clamp-1 text-xs text-muted-foreground flex items-center gap-1">
             <Building2 className="h-3 w-3 shrink-0" />
-            {scheme.ministry}
+            {scheme.department || scheme.ministry}
           </p>
         )}
 
@@ -521,42 +590,81 @@ function SchemeCard({ scheme }: { scheme: Scheme }) {
           </div>
         )}
 
-        {/* Documents requirement preview */}
-        {scheme.documents && scheme.documents.length > 0 && (
-          <div className="mt-3 flex items-center gap-1 text-[11px] text-muted-foreground">
-            <FileCheck2 className="h-3 w-3 text-muted-foreground shrink-0" />
-            <span className="truncate">
-              Docs: {scheme.documents.slice(0, 3).join(", ")}
-              {scheme.documents.length > 3 ? ` +${scheme.documents.length - 3} more` : ""}
+        {/* Documents requirement preview or unverified fallback note */}
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setShowDocs((v) => !v)}
+            className="flex w-full items-center justify-between gap-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground"
+          >
+            <span className="flex items-center gap-1">
+              <FileCheck2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              Required Documents ({scheme.documents?.length || 0})
             </span>
-          </div>
-        )}
+            <span className="text-[10px] text-primary">{showDocs ? "Hide" : "Show"}</span>
+          </button>
+          {showDocs && (
+            <div className="mt-2">
+              {scheme.documents && scheme.documents.length > 0 ? (
+                <div className="flex flex-wrap gap-1">
+                  {scheme.documents.map((d) => (
+                    <span
+                      key={d}
+                      className="rounded-md border border-border bg-secondary/40 px-2 py-0.5 text-[11px]"
+                    >
+                      ✓ {d}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[11px] text-muted-foreground italic rounded-md border border-dashed border-border/80 p-2">
+                  Document requirements could not be fully verified. Please check the official
+                  scheme guidelines.
+                </p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Card Actions: Apply Now & Save */}
-      <div className="mt-5 pt-4 border-t border-border/60 flex items-center justify-between gap-2">
-        <a
-          href={targetUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={handleView}
-          className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition shadow-xs ${
-            isOfficial
-              ? "bg-primary text-primary-foreground hover:brightness-110"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
-        >
-          {isOfficial ? "Apply on Official Government Portal" : "View on myScheme"}
-          <ExternalLink className="h-3.5 w-3.5" />
-        </a>
+      {/* Card Actions: Apply / Register Now & Backup Portal */}
+      <div className="mt-5 pt-4 border-t border-border/60 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 flex-1 min-w-[200px]">
+          <a
+            href={links.primaryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleView}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-bold text-primary-foreground shadow-xs transition hover:brightness-110"
+          >
+            {links.primaryLabel}
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+
+          {/* Guaranteed working backup route */}
+          <a
+            href={links.backupUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleView}
+            title="Alternative verified portal via Government of India myScheme"
+            className="inline-flex items-center gap-1 rounded-xl border border-blue-500/30 bg-blue-50 dark:bg-blue-950/20 px-2.5 py-2 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
+          >
+            <span>{links.backupLabel}</span> <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
 
         <button
           onClick={handleSave}
           disabled={saved}
           title={saved ? "Saved" : "Save scheme"}
-          className="inline-flex items-center gap-1 rounded-xl border border-input p-2 text-xs font-semibold hover:bg-secondary text-muted-foreground hover:text-foreground disabled:opacity-60 transition"
+          className="inline-flex items-center gap-1 rounded-xl border border-input p-2 text-xs font-semibold hover:bg-secondary text-muted-foreground hover:text-foreground disabled:opacity-60 transition shrink-0"
         >
-          {saved ? <Check className="h-4 w-4 text-emerald-600" /> : <Bookmark className="h-4 w-4" />}
+          {saved ? (
+            <Check className="h-4 w-4 text-emerald-600" />
+          ) : (
+            <Bookmark className="h-4 w-4" />
+          )}
         </button>
       </div>
     </article>

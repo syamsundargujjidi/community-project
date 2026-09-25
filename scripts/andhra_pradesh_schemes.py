@@ -29,7 +29,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["student"],
         "education_levels": ["secondary", "higher-secondary", "diploma", "graduate", "postgraduate"],
         "caste_categories": ["obc", "sc", "st", "ews", "minority"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://jnanabhumi.ap.gov.in/",
         "documents": [
@@ -58,7 +58,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["student"],
         "education_levels": ["diploma", "graduate", "postgraduate"],
         "caste_categories": ["obc", "sc", "st", "ews", "minority"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://jnanabhumi.ap.gov.in/",
         "documents": [
@@ -86,7 +86,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -113,7 +113,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://sspensions.ap.gov.in/",
         "documents": [
@@ -142,7 +142,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["farmer"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "rural",
         "official_url": "https://ysrrythubharosa.ap.gov.in/",
         "documents": [
@@ -169,7 +169,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://ysraarogyasri.ap.gov.in/",
         "documents": [
@@ -194,7 +194,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://ysraarogyasri.ap.gov.in/",
         "documents": [
@@ -219,7 +219,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": ["obc", "sc", "st", "minority"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -246,7 +246,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any", "self-employed"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -272,7 +272,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["self-employed", "any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -297,7 +297,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["farmer"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "rural",
         "official_url": "https://ysrrythubharosa.ap.gov.in/",
         "documents": [
@@ -323,7 +323,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": ["obc", "ews"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -350,7 +350,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": ["general", "ews"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -378,7 +378,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["self-employed", "labour", "any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://aptransport.org/",
         "documents": [
@@ -406,7 +406,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["artisan", "self-employed"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -433,7 +433,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["self-employed", "labour", "farmer"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://fisheries.ap.gov.in/",
         "documents": [
@@ -460,7 +460,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["self-employed", "unemployed", "any"],
         "education_levels": ["graduate", "postgraduate"],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://ysrlawnestham.ap.gov.in/",
         "documents": [
@@ -488,7 +488,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["artisan", "self-employed"],
         "education_levels": [],
         "caste_categories": ["obc"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -515,7 +515,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["labour", "unorganised-worker", "farmer", "self-employed", "any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://ysrbima.ap.gov.in/",
         "documents": [
@@ -541,7 +541,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": ["secondary", "higher-secondary", "diploma", "graduate", "postgraduate"],
         "caste_categories": ["obc", "sc", "st", "minority"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://gsws.ap.gov.in/",
         "documents": [
@@ -569,7 +569,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": true,
+        "disability_required": True,
         "area_type": "any",
         "official_url": "https://sspensions.ap.gov.in/",
         "documents": [
@@ -595,7 +595,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["student"],
         "education_levels": ["graduate", "postgraduate"],
         "caste_categories": ["obc", "sc", "st", "ews", "minority"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://jnanabhumi.ap.gov.in/",
         "documents": [
@@ -623,7 +623,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://civilsupplies.ap.gov.in/",
         "documents": [
@@ -649,7 +649,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["farmer"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "rural",
         "official_url": "https://www.apspdcl.in/",
         "documents": [
@@ -674,7 +674,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://cdma.ap.gov.in/",
         "documents": [
@@ -697,7 +697,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["labour", "unorganised-worker"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://bocw.ap.gov.in/",
         "documents": [
@@ -723,7 +723,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any", "student", "self-employed"],
         "education_levels": [],
         "caste_categories": ["general", "ews"],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://www.andhrabrahmin.ap.gov.in/",
         "documents": [
@@ -749,7 +749,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["any"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://www.apsrtc.ap.gov.in/",
         "documents": [
@@ -772,7 +772,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["entrepreneur", "self-employed"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "any",
         "official_url": "https://apindustries.gov.in/",
         "documents": [
@@ -799,7 +799,7 @@ ANDHRA_PRADESH_VERIFIED_SCHEMES = [
         "occupations": ["farmer"],
         "education_levels": [],
         "caste_categories": [],
-        "disability_required": false,
+        "disability_required": False,
         "area_type": "rural",
         "official_url": "https://karshak.ap.gov.in/",
         "documents": [

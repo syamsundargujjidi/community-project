@@ -624,10 +624,17 @@ export function evaluateScheme(scheme: Scheme, p: UserProfile): SchemeMatch {
     .map((c) => `${c.label}: ${c.detail}`);
 
   let status: MatchStatus;
-  if (!geo.ok) status = "out_of_scope";
-  else if (s.scheme_status && norm(s.scheme_status) !== "active") status = "inactive";
-  else if (failures.length > 0) status = "ineligible";
-  else status = "eligible";
+  if (s.scheme_status && norm(s.scheme_status) !== "active") status = "inactive";
+  else if (failures.length > 0) {
+    status = !geo.ok ? "out_of_scope" : "ineligible";
+  } else if (
+    missing.length > 0 &&
+    (s.student_required || s.farmer_required || s.land_ownership_required || s.disability_required)
+  ) {
+    status = "verify";
+  } else {
+    status = "eligible";
+  }
 
   const total = checks.length;
   const passed = checks.filter((c) => c.status === "pass").length;
@@ -736,7 +743,12 @@ export function evaluateAll(schemes: Scheme[], p: UserProfile): EligibilityResul
   const all = sortMatches(inScope, "match");
   const eligible = all.filter((m) => m.status === "eligible");
   const verify = all.filter((m) => m.status === "verify");
-  const ineligible = all.filter((m) => m.status === "ineligible");
+  const inStateIneligible = all.filter((m) => m.status === "ineligible");
+  const stateMismatchIneligible = outOfScope.map((m) => ({
+    ...m,
+    status: "ineligible" as const,
+  }));
+  const ineligible = [...inStateIneligible, ...stateMismatchIneligible];
 
   return {
     all,

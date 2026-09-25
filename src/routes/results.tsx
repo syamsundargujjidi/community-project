@@ -15,8 +15,14 @@ import {
   VolumeX,
   Filter,
   Sparkles,
+  Search,
 } from "lucide-react";
-import { schemesQueryOptions, officialLink, type UserProfile } from "@/lib/schemes";
+import {
+  schemesQueryOptions,
+  officialLink,
+  resolveSchemeLinks,
+  type UserProfile,
+} from "@/lib/schemes";
 import {
   evaluateAll,
   sortMatches,
@@ -25,7 +31,7 @@ import {
   type SchemeMatch,
   type SortKey,
 } from "@/lib/matching";
-import { explainScheme } from "@/lib/ai.functions";
+import { explainScheme } from "@/lib/ai.server";
 import {
   saveSchemesResult,
   saveScheme,
@@ -37,6 +43,14 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { AuthGate } from "@/components/site/AuthGate";
 
+function ResultsRouteComponent() {
+  return (
+    <AuthGate feature="your personalised scheme matches">
+      <Results />
+    </AuthGate>
+  );
+}
+
 export const Route = createFileRoute("/results")({
   ssr: false,
   loader: ({ context }) => context.queryClient.ensureQueryData(schemesQueryOptions),
@@ -47,11 +61,7 @@ export const Route = createFileRoute("/results")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => (
-    <AuthGate feature="your personalised scheme matches">
-      <Results />
-    </AuthGate>
-  ),
+  component: ResultsRouteComponent,
 });
 
 function Results() {
@@ -386,39 +396,47 @@ function VerificationList({ matches }: { matches: SchemeMatch[] }) {
         <span className="text-xl">⚠️</span>
         <div>
           <h2 className="font-display text-lg font-bold text-foreground">
-            {matches.length} {matches.length === 1 ? "Scheme" : "Schemes"} Potentially Eligible / Needs Verification
+            {matches.length} {matches.length === 1 ? "Scheme" : "Schemes"} Potentially Eligible /
+            Needs Verification
           </h2>
           <p className="mt-1 text-sm font-medium text-amber-800 dark:text-amber-300">
-            "You may be eligible. Please verify the detailed eligibility requirements on the official scheme portal."
+            "You may be eligible. Please verify the detailed eligibility requirements on the
+            official scheme portal."
           </p>
         </div>
       </div>
       <div className="mt-5 grid gap-4 md:grid-cols-2">
         {matches.map((m) => {
           const s = m.scheme;
-          const offUrl = s.official_source_url || s.official_website || s.apply_url;
-          const isOfficial = !!offUrl && !offUrl.includes("myscheme.gov.in");
-          const targetUrl = isOfficial ? offUrl : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
+          const links = resolveSchemeLinks(s);
           return (
-            <div key={s.id} className="rounded-2xl border border-border bg-card p-4 flex flex-col justify-between">
+            <div
+              key={s.id}
+              className="rounded-2xl border border-border bg-card p-4 flex flex-col justify-between"
+            >
               <div>
                 <div className="flex items-center justify-between gap-1 text-[11px]">
                   <span className="font-semibold text-amber-700 dark:text-amber-400">
                     Needs Documentation Verification
                   </span>
                   <span className="text-muted-foreground">
-                    Last verified: {s.last_verified ? s.last_verified.split("T")[0].split("-").reverse().join("/") : "20/09/2026"}
+                    Last verified:{" "}
+                    {s.last_verified
+                      ? s.last_verified.split("T")[0].split("-").reverse().join("/")
+                      : "25/09/2026"}
                   </span>
                 </div>
                 <h3 className="mt-1 font-bold text-sm text-foreground">{s.name}</h3>
-                <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{s.short_description || s.benefits}</p>
+                <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+                  {s.short_description || s.benefits}
+                </p>
               </div>
               <div className="mt-3 pt-2 border-t border-border/60 flex items-center justify-between">
                 <span className="text-[11px] text-muted-foreground">
                   {s.state ? s.state : "Central"} · {s.category}
                 </span>
                 <a
-                  href={targetUrl}
+                  href={links.primaryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 rounded-lg bg-secondary px-2.5 py-1 text-xs font-semibold hover:bg-secondary/80 text-foreground transition"
@@ -435,27 +453,173 @@ function VerificationList({ matches }: { matches: SchemeMatch[] }) {
 }
 
 function IneligibleList({ matches }: { matches: SchemeMatch[] }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [ineligibleQ, setIneligibleQ] = useState("");
+  const [filterType, setFilterType] = useState<"all" | "state" | "criteria">("all");
+  const [visibleCount, setVisibleCount] = useState(12);
+
   if (matches.length === 0) return null;
+
+  const filteredMatches = matches.filter((m) => {
+    if (ineligibleQ) {
+      const q = ineligibleQ.toLowerCase();
+      const txt =
+        `${m.scheme.name} ${m.scheme.category} ${m.scheme.state || ""} ${m.failures.join(" ")}`.toLowerCase();
+      if (!txt.includes(q)) return false;
+    }
+    if (filterType === "state") {
+      return m.failures.some(
+        (f) => f.toLowerCase().includes("state") || f.toLowerCase().includes("residents of"),
+      );
+    }
+    if (filterType === "criteria") {
+      return m.failures.some(
+        (f) => !f.toLowerCase().includes("state") && !f.toLowerCase().includes("residents of"),
+      );
+    }
+    return true;
+  });
+
   return (
-    <div className="mt-10">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-2 rounded-full border border-input px-4 py-2 text-sm font-semibold hover:bg-secondary"
-        aria-expanded={open}
-      >
-        ❌ {matches.length} not eligible
-        <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
-      </button>
+    <div className="mt-14 rounded-3xl border border-destructive/20 bg-destructive/5 p-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl">❌</span>
+          <div>
+            <h2 className="font-display text-xl font-bold text-foreground">
+              {matches.length} Schemes Not Eligible
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Transparent eligibility breakdown: understand exactly why specific Central or
+              other-state schemes are unavailable for your current profile.
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-card px-4 py-2 text-xs font-bold text-foreground shadow-xs hover:bg-secondary"
+          aria-expanded={open}
+        >
+          {open ? "Collapse list" : `View ${matches.length} ineligible schemes`}
+          <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+      </div>
+
       {open && (
-        <ul className="mt-4 space-y-2">
-          {matches.map((m) => (
-            <li key={m.scheme.id} className="rounded-xl border border-border bg-card p-3 text-sm">
-              <span className="font-medium">{m.scheme.name}</span>
-              <span className="ml-2 text-xs text-muted-foreground">{m.failures.join(" · ")}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6">
+          {/* Controls: Search & Filter */}
+          <div className="flex flex-wrap items-center gap-3 border-b border-border/60 pb-4">
+            <div className="relative flex-1 min-w-[220px]">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={ineligibleQ}
+                onChange={(e) => {
+                  setIneligibleQ(e.target.value);
+                  setVisibleCount(12);
+                }}
+                placeholder="Search ineligible schemes (e.g. 'Rythu Bandhu', 'Pension', 'Telangana')..."
+                className="w-full rounded-xl border border-input bg-card py-2 pl-9 pr-3 text-xs outline-none focus:border-ring text-foreground"
+              />
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {(
+                [
+                  { id: "all", label: `All (${matches.length})` },
+                  { id: "state", label: "State Restrictions" },
+                  { id: "criteria", label: "Income / Age / Category" },
+                ] as const
+              ).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    setFilterType(t.id);
+                    setVisibleCount(12);
+                  }}
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                    filterType === t.id
+                      ? "bg-destructive text-destructive-foreground"
+                      : "bg-card text-muted-foreground hover:bg-secondary border border-border"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {filteredMatches.slice(0, visibleCount).map((m) => {
+              const s = m.scheme;
+              const links = resolveSchemeLinks(s);
+
+              return (
+                <div
+                  key={s.id}
+                  className="rounded-2xl border border-destructive/20 bg-card p-5 shadow-xs flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-2.5 py-0.5 text-xs font-bold text-destructive">
+                        ❌ Not eligible
+                      </span>
+                      <span className="text-[11px] font-medium text-muted-foreground">
+                        {s.state ? `${s.state} Government` : "Central Government"}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-2 text-base font-bold text-foreground leading-snug">
+                      {s.name}
+                    </h3>
+
+                    {/* Prominent Reason callout */}
+                    <div className="mt-3 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-xs">
+                      <p className="font-bold text-destructive">Reason:</p>
+                      <ul className="mt-1 space-y-1 text-foreground/90 font-medium">
+                        {m.failures.map((f, idx) => (
+                          <li key={idx} className="flex items-start gap-1.5">
+                            <span className="text-destructive shrink-0">•</span>
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <p className="mt-2.5 text-xs text-muted-foreground line-clamp-2">
+                      {s.short_description || s.benefits}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between text-xs">
+                    <span className="text-[11px] text-muted-foreground">
+                      Category: <strong>{s.category}</strong>
+                    </span>
+                    <a
+                      href={links.primaryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+                    >
+                      View Guidelines / Official Portal <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Show More Pagination */}
+          {filteredMatches.length > visibleCount && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setVisibleCount((c) => c + 12)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-5 py-2 text-xs font-bold hover:bg-secondary"
+              >
+                Load {Math.min(12, filteredMatches.length - visibleCount)} more ineligible schemes
+              </button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
@@ -506,13 +670,7 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
   const [explaining, setExplaining] = useState(false);
   const [explanation, setExplanation] = useState<string | null>(null);
   const { i18n } = useTranslation();
-  const link = officialLink(scheme as any);
-  const officialUrl = link.url;
-  const schemeActive =
-    (((scheme as any).scheme_status as string | undefined) ?? "Active") === "Active";
-  // Show the official site unless the page is confirmed gone (404/410) or the scheme ended.
-  // "Could not reach" usually means the site blocks checks from outside India, so keep it.
-  const showOfficial = !!officialUrl && schemeActive;
+  const links = resolveSchemeLinks(scheme);
 
   function onApplyClick() {
     if (user) trackRecentScheme(user.uid, scheme.id, scheme.name);
@@ -578,23 +736,26 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
       <div className="mt-3 flex items-center justify-between text-[11px]">
         <span
           className={`inline-flex items-center gap-1 font-semibold ${
-            showOfficial ? "text-emerald-600 dark:text-emerald-400" : "text-blue-600 dark:text-blue-400"
+            links.isOfficial
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-blue-600 dark:text-blue-400"
           }`}
         >
-          {showOfficial ? (
+          {links.isOfficial ? (
             <>
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              ✓ Official Government Source
+              <CheckCircle2 className="h-3.5 w-3.5" />✓ Official Government Source
             </>
           ) : (
             <>
-              <ExternalLink className="h-3.5 w-3.5" />
-              ↗ myScheme Government Source
+              <ExternalLink className="h-3.5 w-3.5" />↗ myScheme Government Source
             </>
           )}
         </span>
         <span className="text-muted-foreground font-normal">
-          Last verified: {scheme.last_verified ? scheme.last_verified.split("T")[0].split("-").reverse().join("/") : "20/09/2026"}
+          Last verified:{" "}
+          {scheme.last_verified
+            ? scheme.last_verified.split("T")[0].split("-").reverse().join("/")
+            : "20/09/2026"}
         </span>
       </div>
 
@@ -629,63 +790,76 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
         </div>
       )}
 
-      {scheme.documents.length > 0 && (
-        <div className="mt-4">
-          <button
-            type="button"
-            onClick={() => setShowDocs((v) => !v)}
-            className="flex w-full items-center justify-between gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition hover:bg-secondary"
-            aria-expanded={showDocs}
-          >
-            <span className="inline-flex items-center gap-1.5">
-              <FileText className="h-3.5 w-3.5" /> {t("results.docs")} ({scheme.documents.length})
-            </span>
-            <ChevronDown
-              className={`h-3.5 w-3.5 transition-transform ${showDocs ? "rotate-180" : ""}`}
-            />
-          </button>
-          {showDocs && (
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {scheme.documents.map((d) => (
-                <span key={d} className="rounded-md border border-border px-2 py-0.5 text-xs">
-                  {d}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-        {showOfficial ? (
-          <a
-            href={officialUrl!}
-            target="_blank"
-            rel="noreferrer"
-            onClick={onApplyClick}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
-          >
-            Apply on Official Government Portal <ExternalLink className="h-4 w-4" />
-          </a>
-        ) : (
-          <a
-            href={myschemeUrl(scheme.name)}
-            target="_blank"
-            rel="noreferrer"
-            onClick={onApplyClick}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-blue-600 bg-blue-600/10 px-5 py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 transition hover:bg-blue-600 hover:text-white"
-          >
-            View on myScheme <ExternalLink className="h-4 w-4" />
-          </a>
+      <div className="mt-4">
+        <button
+          type="button"
+          onClick={() => setShowDocs((v) => !v)}
+          className="flex w-full items-center justify-between gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition hover:bg-secondary"
+          aria-expanded={showDocs}
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <FileText className="h-3.5 w-3.5" /> {t("results.docs")} (
+            {scheme.documents?.length || 0})
+          </span>
+          <ChevronDown
+            className={`h-3.5 w-3.5 transition-transform ${showDocs ? "rotate-180" : ""}`}
+          />
+        </button>
+        {showDocs && (
+          <div className="mt-2">
+            {scheme.documents && scheme.documents.length > 0 ? (
+              <div className="flex flex-wrap gap-1.5">
+                {scheme.documents.map((d) => (
+                  <span
+                    key={d}
+                    className="rounded-md border border-border bg-muted/20 px-2 py-0.5 text-xs"
+                  >
+                    ✓ {d}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="rounded-md border border-dashed border-border p-2.5 text-xs text-muted-foreground italic">
+                Document requirements could not be fully verified. Please check the official scheme
+                guidelines.
+              </p>
+            )}
+          </div>
         )}
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-center gap-2">
+        <a
+          href={links.primaryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onApplyClick}
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs sm:text-sm font-bold text-primary-foreground shadow-xs transition hover:brightness-110 min-w-[200px]"
+        >
+          {links.primaryLabel} <ExternalLink className="h-4 w-4" />
+        </a>
+
+        {/* Guaranteed working backup official site */}
+        <a
+          href={links.backupUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onApplyClick}
+          title="Alternative verified portal via Government of India myScheme"
+          className="inline-flex items-center justify-center gap-1 rounded-xl border border-blue-600/40 bg-blue-50 dark:bg-blue-950/30 px-3 py-2.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
+        >
+          <span>{links.backupLabel}</span>
+          <ExternalLink className="h-3 w-3" />
+        </a>
+
         <button
           onClick={onSaveOne}
           disabled={savedOne}
-          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-input px-3 py-2 text-xs font-semibold hover:bg-secondary disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-input px-3 py-2.5 text-xs font-semibold hover:bg-secondary disabled:opacity-60 transition shrink-0"
         >
           {savedOne ? (
             <>
-              <Check className="h-3.5 w-3.5" /> Saved
+              <Check className="h-3.5 w-3.5 text-emerald-600" /> Saved
             </>
           ) : (
             <>

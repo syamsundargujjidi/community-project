@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { translateBatch } from "@/lib/ai.functions";
+import { translateBatch } from "@/lib/ai.server";
 
 type Ctx = {
   translating: boolean;

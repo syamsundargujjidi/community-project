@@ -83,7 +83,6 @@
   --hero-to: oklch(0.42 0.11 190);
 }
 
-
 .dark {
   --background: oklch(0.16 0.04 258);
   --foreground: oklch(0.98 0.005 240);
@@ -114,13 +113,17 @@
   * {
     border-color: var(--color-border);
   }
-  html, body {
+  html,
+  body {
     font-family: var(--font-sans);
     background-color: var(--color-background);
     color: var(--color-foreground);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
@@ -158,14 +161,26 @@
 }
 
 @keyframes float-3d {
-  0%, 100% { transform: translateY(0) rotateX(6deg) rotateY(-6deg); }
-  50% { transform: translateY(-8px) rotateX(4deg) rotateY(-4deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotateX(6deg) rotateY(-6deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+  }
 }
 
 @keyframes blob-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -40px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
 }
 
 /* High-contrast mode toggled via <html class="hc"> from AccessibilityWidget */
@@ -186,29 +201,62 @@ html.hc {
   --input: oklch(0.3 0 0);
   --ring: oklch(0.25 0.05 240);
 }
-html.hc a, html.hc button { text-decoration-thickness: 2px; }
-
-
+html.hc a,
+html.hc button {
+  text-decoration-thickness: 2px;
+}
 
 /* Occupation-based hero themes (set on the hero section wrapper) */
-.persona-default { --persona-tint: oklch(0.28 0.06 250 / 0.82); --persona-glow: oklch(0.7 0.15 158 / 0.35); }
-.persona-farmer  { --persona-tint: oklch(0.32 0.09 150 / 0.78); --persona-glow: oklch(0.75 0.17 140 / 0.4); }
-.persona-student { --persona-tint: oklch(0.32 0.11 250 / 0.78); --persona-glow: oklch(0.7 0.16 245 / 0.4); }
-.persona-worker  { --persona-tint: oklch(0.34 0.12 55 / 0.78);  --persona-glow: oklch(0.78 0.17 60 / 0.4); }
-.persona-women   { --persona-tint: oklch(0.32 0.13 305 / 0.78); --persona-glow: oklch(0.72 0.18 310 / 0.4); }
-.persona-senior  { --persona-tint: oklch(0.38 0.06 235 / 0.76); --persona-glow: oklch(0.82 0.09 235 / 0.4); }
-.persona-business{ --persona-tint: oklch(0.22 0.08 265 / 0.84); --persona-glow: oklch(0.6 0.14 265 / 0.4); }
-.persona-inclusive{--persona-tint: oklch(0.32 0.09 200 / 0.78); --persona-glow: oklch(0.78 0.14 195 / 0.4); }
+.persona-default {
+  --persona-tint: oklch(0.28 0.06 250 / 0.82);
+  --persona-glow: oklch(0.7 0.15 158 / 0.35);
+}
+.persona-farmer {
+  --persona-tint: oklch(0.32 0.09 150 / 0.78);
+  --persona-glow: oklch(0.75 0.17 140 / 0.4);
+}
+.persona-student {
+  --persona-tint: oklch(0.32 0.11 250 / 0.78);
+  --persona-glow: oklch(0.7 0.16 245 / 0.4);
+}
+.persona-worker {
+  --persona-tint: oklch(0.34 0.12 55 / 0.78);
+  --persona-glow: oklch(0.78 0.17 60 / 0.4);
+}
+.persona-women {
+  --persona-tint: oklch(0.32 0.13 305 / 0.78);
+  --persona-glow: oklch(0.72 0.18 310 / 0.4);
+}
+.persona-senior {
+  --persona-tint: oklch(0.38 0.06 235 / 0.76);
+  --persona-glow: oklch(0.82 0.09 235 / 0.4);
+}
+.persona-business {
+  --persona-tint: oklch(0.22 0.08 265 / 0.84);
+  --persona-glow: oklch(0.6 0.14 265 / 0.4);
+}
+.persona-inclusive {
+  --persona-tint: oklch(0.32 0.09 200 / 0.78);
+  --persona-glow: oklch(0.78 0.14 195 / 0.4);
+}
 
-.persona-hero { position: relative; isolation: isolate; }
+.persona-hero {
+  position: relative;
+  isolation: isolate;
+}
 .persona-hero .persona-image {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; z-index: -2;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
 }
 .persona-hero .persona-overlay {
-  position: absolute; inset: 0; z-index: -1;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background:
-    radial-gradient(circle at 20% 20%, var(--persona-glow), transparent 45%),
-    var(--persona-tint);
+    radial-gradient(circle at 20% 20%, var(--persona-glow), transparent 45%), var(--persona-tint);
   transition: background 400ms ease;
 }

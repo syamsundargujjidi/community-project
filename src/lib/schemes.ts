@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import { collection, getDocs, doc, setDoc, query, orderBy, limit } from "firebase/firestore";
 import { getDb } from "@/integrations/firebase/client";
 import { DEFAULT_SCHEMES } from "./default-schemes";
+import { getAllCatalogSchemesServer } from "./schemes.server";
 
 export type Scheme = {
   id: string;
@@ -25,6 +26,11 @@ export type Scheme = {
   disability_required: boolean;
   official_website: string | null;
   official_source_url?: string | null;
+  officialInfoUrl?: string | null;
+  applicationUrl?: string | null;
+  registrationUrl?: string | null;
+  fallbackUrl?: string | null;
+  source?: string | null;
   apply_url: string;
   is_popular: boolean;
   tags: string[];
@@ -97,6 +103,11 @@ function docToScheme(id: string, d: Record<string, any>): Scheme {
     disability_required: d.disability_required ?? d.eligibility?.disabilityRequired ?? false,
     official_website: d.official_website || d.applyLink || d.apply_url || null,
     official_source_url: d.official_source_url || d.officialWebsite || null,
+    officialInfoUrl: d.officialInfoUrl || d.official_website || null,
+    applicationUrl: d.applicationUrl || d.apply_url || d.applyLink || null,
+    registrationUrl: d.registrationUrl || d.applicationUrl || d.apply_url || null,
+    fallbackUrl: d.fallbackUrl || null,
+    source: d.source || null,
     apply_url: d.apply_url || d.applyLink || "",
     is_popular: Boolean(d.is_popular ?? d.popular ?? d.featured ?? false),
     tags: d.tags ?? [],
@@ -114,6 +125,19 @@ export const schemesQueryOptions = queryOptions({
   queryKey: ["schemes"],
   queryFn: async (): Promise<Scheme[]> => {
     try {
+      // 1. Fetch full verified catalog from server function
+      try {
+        const fullCatalog = await getAllCatalogSchemesServer();
+        if (Array.isArray(fullCatalog) && fullCatalog.length > 0) {
+          return fullCatalog;
+        }
+      } catch (e) {
+        console.warn(
+          "[schemesQueryOptions] Server fetch error, using Firestore/default fallback:",
+          e,
+        );
+      }
+
       if (typeof window !== "undefined") {
         const db = getDb();
         const col = collection(db, "schemes");
@@ -265,26 +289,114 @@ type LinkFields = {
   link_fail_count?: number | null;
 };
 
+export function isValidHttpUrl(url?: string | null): boolean {
+  if (!url || typeof url !== "string") return false;
+  const trimmed = url.trim();
+  if (
+    trimmed.startsWith("#") ||
+    trimmed.startsWith("javascript:") ||
+    trimmed.includes("example.com") ||
+    trimmed.includes("localhost") ||
+    !/^https?:\/\/[a-z0-9.-]+\.[a-z]{2,}/i.test(trimmed)
+  ) {
+    return false;
+  }
+  return true;
+}
+
+export type ResolvedSchemeLink = {
+  primaryUrl: string;
+  primaryLabel: string;
+  backupUrl: string;
+  backupLabel: string;
+  isOfficial: boolean;
+  departmentName: string;
+};
+
+/**
+ * Dynamic link resolution following the strict priority ladder:
+ * 1. Exact official scheme application URL
+ * 2. Exact official scheme registration URL
+ * 3. Official scheme/department website
+ * 4. State-specific citizen portal (for AP: gramawardsachivalayam.ap.gov.in)
+ * 5. National scheme search fallback (myscheme.gov.in/search?q=...)
+ */
+export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink {
+  const name = scheme.name || "Government Welfare Scheme";
+  const state = scheme.state;
+  const isAP = state === "Andhra Pradesh";
+  const searchFallback = `https://www.myscheme.gov.in/search?q=${encodeURIComponent(name)}`;
+  const apPortalDefault = "https://gramawardsachivalayam.ap.gov.in/";
+
+  // Candidate URLs in priority order:
+  const candidates = [
+    scheme.applicationUrl,
+    scheme.apply_url,
+    scheme.registrationUrl,
+    scheme.official_website,
+    scheme.official_source_url,
+    scheme.officialInfoUrl,
+  ];
+
+  let chosenPrimary = "";
+  for (const c of candidates) {
+    if (isValidHttpUrl(c)) {
+      chosenPrimary = c!.trim();
+      break;
+    }
+  }
+
+  // Fallback if no valid candidate found
+  if (!chosenPrimary) {
+    chosenPrimary = isAP ? apPortalDefault : searchFallback;
+  }
+
+  const isOfficial = !chosenPrimary.includes("myscheme.gov.in");
+
+  let primaryLabel = "Apply / Register on Official Portal";
+  if (!isOfficial) {
+    primaryLabel = "Apply via myScheme Portal";
+  } else if (chosenPrimary.endsWith(".gov.in/") || chosenPrimary.endsWith(".org/")) {
+    primaryLabel = "Apply / Visit Official Portal";
+  }
+
+  // Guaranteed working backup URL
+  let backupUrl =
+    scheme.fallbackUrl && isValidHttpUrl(scheme.fallbackUrl)
+      ? scheme.fallbackUrl.trim()
+      : searchFallback;
+  let backupLabel = "myScheme National Backup";
+
+  if (chosenPrimary === backupUrl) {
+    if (isAP) {
+      backupUrl = apPortalDefault;
+      backupLabel = "AP Government Citizen Portal";
+    } else {
+      backupUrl = "https://www.india.gov.in/";
+      backupLabel = "National Portal of India";
+    }
+  }
+
+  const departmentName =
+    scheme.department ||
+    scheme.ministry ||
+    (isAP
+      ? "Government of Andhra Pradesh"
+      : state
+        ? `Government of ${state}`
+        : "Government of India");
+
+  return {
+    primaryUrl: chosenPrimary,
+    primaryLabel,
+    backupUrl,
+    backupLabel,
+    isOfficial,
+    departmentName,
+  };
+}
+
 export function officialLink(scheme: LinkFields): OfficialLink {
-  const raw = scheme.official_source_url || scheme.official_website || scheme.apply_url || "";
-  const url = /^https?:\/\/[^\s]+\.[a-z]{2,}/i.test(raw) ? raw : null;
-
-  if (!url) return { state: "missing", url: null, note: "Official application link unavailable" };
-
-  const status = scheme.link_status ?? "unchecked";
-  const fails = scheme.link_fail_count ?? 0;
-
-  if (status === "invalid" && fails >= 2) {
-    return { state: "invalid", url: null, note: "Official page no longer exists" };
-  }
-  if (status === "unreachable" || (status === "invalid" && fails < 2)) {
-    return {
-      state: "unreachable",
-      url,
-      note: scheme.link_http_status
-        ? `Could not reach the official site (HTTP ${scheme.link_http_status}) — try it anyway`
-        : "Could not reach the official site — try it anyway",
-    };
-  }
-  return { state: "ok", url };
+  const resolved = resolveSchemeLinks(scheme as Partial<Scheme>);
+  return { state: "ok", url: resolved.primaryUrl };
 }
