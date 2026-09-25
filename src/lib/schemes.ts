@@ -119,33 +119,47 @@ export const schemesQueryOptions = queryOptions({
         const col = collection(db, "schemes");
         const snap = await getDocs(col);
 
+        const schemeMap = new Map<string, Scheme>();
+
         if (!snap.empty) {
-          const list: Scheme[] = [];
           snap.forEach((d) => {
-            list.push(docToScheme(d.id, d.data()));
+            const s = docToScheme(d.id, d.data());
+            schemeMap.set(s.slug || s.id, s);
           });
-          list.sort(
-            (a, b) =>
-              (b.is_popular ? 1 : 0) - (a.is_popular ? 1 : 0) || a.name.localeCompare(b.name),
-          );
-          return list;
         }
 
-        // Firestore is empty; seed DEFAULT_SCHEMES into Firestore
-        console.log("[schemes] Initializing Firestore schemes collection with seed data...");
-        for (const s of DEFAULT_SCHEMES) {
-          const docId = s.slug || s.id;
-          setDoc(
-            doc(db, "schemes", docId),
-            {
-              ...s,
-              schemeName: s.name,
-              description: s.short_description,
-              featured: s.is_popular,
-            },
-            { merge: true },
-          ).catch((e) => console.warn(`[schemes] seed error on ${docId}:`, e));
+        // Merge all DEFAULT_SCHEMES so new programs are immediately available
+        const missingToSeed: Scheme[] = [];
+        for (const def of DEFAULT_SCHEMES) {
+          const key = def.slug || def.id;
+          if (!schemeMap.has(key)) {
+            schemeMap.set(key, def);
+            missingToSeed.push(def);
+          }
         }
+
+        // Asynchronously persist any missing schemes into Firestore
+        if (missingToSeed.length > 0) {
+          for (const s of missingToSeed) {
+            const docId = s.slug || s.id;
+            setDoc(
+              doc(db, "schemes", docId),
+              {
+                ...s,
+                schemeName: s.name,
+                description: s.short_description,
+                featured: s.is_popular,
+              },
+              { merge: true },
+            ).catch((e) => console.warn(`[schemes] sync error on ${docId}:`, e));
+          }
+        }
+
+        const list = Array.from(schemeMap.values());
+        list.sort(
+          (a, b) => (b.is_popular ? 1 : 0) - (a.is_popular ? 1 : 0) || a.name.localeCompare(b.name),
+        );
+        return list;
       }
     } catch (err) {
       console.warn("[schemes] Firestore query failed, falling back to seed schemes:", err);

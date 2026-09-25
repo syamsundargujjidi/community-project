@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { searchSchemes } from "./schemes-db.server";
 
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const MODEL = "google/gemini-2.5-flash";
@@ -116,8 +117,61 @@ export const chatWithAssistant = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const langKey = data.lang || "en";
     const langName = LANG_NAMES[langKey] ?? "English";
+
+    // 1. Retrieve genuine relevant schemes from the database based on the latest user query
+    const lastUserMsg = [...data.messages].reverse().find((m) => m.role === "user")?.content || "";
+    let retrievedContext = "";
+    let recommendations: Array<{
+      id: string;
+      name: string;
+      category: string;
+      state: string | null;
+      benefits: string;
+      documents: string[];
+      officialUrl: string;
+      fallbackUrl: string;
+      source: string;
+    }> = [];
+
     try {
-      const system = `You are "Sathi", the official AI assistant for Scheme Sathi AI (योजना साथी) — a free portal helping Indian citizens discover Central and State government welfare schemes.
+      const searchRes = searchSchemes({ q: lastUserMsg, pageSize: 6 });
+      if (searchRes.items.length > 0) {
+        recommendations = searchRes.items.map((s) => ({
+          id: s.id,
+          name: s.name,
+          category: s.category,
+          state: s.state,
+          benefits: s.benefits || s.short_description || "",
+          documents: s.documents || [],
+          officialUrl: s.official_website || s.apply_url || "",
+          fallbackUrl: s.fallbackUrl || `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`,
+          source: s.source || s.ministry || (s.state ? `Government of ${s.state}` : "Government of India"),
+        }));
+
+        retrievedContext = searchRes.items
+          .map(
+            (s, idx) => `
+[Scheme ${idx + 1}]
+Name: ${s.name}
+Government Level: ${s.government_level || (s.state ? "State" : "Central")} (${s.state || "Central Government"})
+Ministry/Department: ${s.ministry || s.department || "Government of India"}
+Category: ${s.category}
+Main Benefit: ${s.benefits || s.short_description}
+Eligibility: Min Age: ${s.min_age ?? "Any"}, Max Age: ${s.max_age ?? "Any"}, Max Annual Income: ${s.max_annual_income ? "₹" + s.max_annual_income : "No limit"}, Target Occupations: ${(s.occupations || []).join(", ") || "All citizens"}, Gender: ${s.gender}
+Required Documents: ${(s.documents || []).join(", ") || "Aadhaar card, Bank passbook"}
+Official Application URL: ${s.official_website || s.apply_url}
+myScheme Fallback URL: ${s.fallbackUrl || "https://www.myscheme.gov.in/search?q=" + encodeURIComponent(s.name)}
+Source: ${s.source || s.ministry || "Official Government"}
+`,
+          )
+          .join("\n");
+      }
+    } catch (e) {
+      console.warn("[chatWithAssistant] Search grounding error:", e);
+    }
+
+    try {
+      const system = `You are "Sathi", the official AI assistant for Scheme Sathi AI (योजना साथी) — a centralized portal helping Indian citizens discover 4,000+ Central and State government welfare schemes.
 
 CRITICAL LANGUAGE REQUIREMENT:
 - You MUST answer, speak, and converse STRICTLY AND EXCLUSIVELY in ${langName}.
@@ -125,22 +179,37 @@ CRITICAL LANGUAGE REQUIREMENT:
 - Even if the user types in English, Roman transliteration, or another language, YOUR COMPLETE ANSWER MUST BE IN ${langName}.
 - All scheme details, eligibility guidance, documents, and greetings must be translated and presented naturally in ${langName}.
 
-Content Guidelines:
-- Be warm, respectful, concise, and easy to understand for all citizens.
-- Guide users to complete the "Check Eligibility" questionnaire for accurate personalized recommendations.
-- When mentioning schemes (PM-KISAN, Ayushman Bharat, PMAY, MGNREGA, PM Ujjwala, Sukanya Samriddhi, Jan Dhan, MUDRA, PM-SVANidhi, Ladki Bahin, Gruha Lakshmi, Rythu Bharosa, etc.), clearly explain who is eligible and key benefits.
-- Never invent nonexistent schemes or fake links. Remind users to verify on myscheme.gov.in.
-- Strictly refuse to ask for or collect private sensitive information (like Aadhaar numbers, OTP, bank account numbers).`;
+ACCURACY & ANTI-HALLUCINATION RULES:
+- DO NOT invent fake schemes, fake eligibility rules, or fictional benefits.
+- Ground your answers in the following verified schemes retrieved directly from the official database:
+${retrievedContext ? `=== VERIFIED SCHEMES RETRIEVED FROM DATABASE ===\n${retrievedContext}\n================================================` : "No specific database match found. Advise user to search by state/occupation or complete the questionnaire."}
+
+RESPONSE STRUCTURE FOR RECOMMENDATIONS:
+When answering queries about available schemes (e.g. for students, farmers, youth, women, specific states):
+For every recommended scheme, explicitly include:
+1. **Scheme Name**
+2. **Why it matches the user** (based on user's mentioned age, state, education, occupation)
+3. **Main Benefit** (exact monetary or direct benefit from database)
+4. **Eligibility** (age, income, category criteria)
+5. **Required Documents** (Aadhaar, income certificate, etc.)
+6. **Government / Source** (Ministry or State department)
+7. **Apply Link / Button**: provide the Official Application URL (or verified myScheme fallback link if official is unavailable).
+
+Keep your tone warm, helpful, and concise. Never ask for Aadhaar numbers, bank account numbers, or OTPs.`;
 
       const content = await callGateway({
         model: MODEL,
         messages: [{ role: "system", content: system }, ...data.messages],
-        temperature: 0.5,
+        temperature: 0.4,
       });
-      return { reply: content || FALLBACK_REPLIES[langKey] || FALLBACK_REPLIES.en };
+      return {
+        reply: content || FALLBACK_REPLIES[langKey] || FALLBACK_REPLIES.en,
+        recommendations,
+      };
     } catch {
       return {
         reply: FALLBACK_REPLIES[langKey] || FALLBACK_REPLIES.en,
+        recommendations,
       };
     }
   });

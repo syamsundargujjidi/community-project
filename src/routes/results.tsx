@@ -381,19 +381,54 @@ function Results() {
 function VerificationList({ matches }: { matches: SchemeMatch[] }) {
   if (matches.length === 0) return null;
   return (
-    <div className="mt-12">
-      <h2 className="font-display text-xl font-bold">
-        {matches.length} additional {matches.length === 1 ? "scheme" : "schemes"} to explore
-      </h2>
-      <div className="mt-4 grid gap-3 md:grid-cols-2">
-        {matches.map((m) => (
-          <div key={m.scheme.id} className="rounded-2xl border border-border bg-card p-4">
-            <p className="font-semibold">{m.scheme.name}</p>
-            <p className="text-xs text-muted-foreground">
-              {isCentral(m.scheme) ? "Central" : `State · ${m.scheme.state}`} · {m.scheme.category}
-            </p>
-          </div>
-        ))}
+    <div className="mt-12 rounded-3xl border border-amber-500/30 bg-amber-500/5 p-6">
+      <div className="flex items-start gap-3">
+        <span className="text-xl">⚠️</span>
+        <div>
+          <h2 className="font-display text-lg font-bold text-foreground">
+            {matches.length} {matches.length === 1 ? "Scheme" : "Schemes"} Potentially Eligible / Needs Verification
+          </h2>
+          <p className="mt-1 text-sm font-medium text-amber-800 dark:text-amber-300">
+            "You may be eligible. Please verify the detailed eligibility requirements on the official scheme portal."
+          </p>
+        </div>
+      </div>
+      <div className="mt-5 grid gap-4 md:grid-cols-2">
+        {matches.map((m) => {
+          const s = m.scheme;
+          const offUrl = s.official_source_url || s.official_website || s.apply_url;
+          const isOfficial = !!offUrl && !offUrl.includes("myscheme.gov.in");
+          const targetUrl = isOfficial ? offUrl : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
+          return (
+            <div key={s.id} className="rounded-2xl border border-border bg-card p-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-1 text-[11px]">
+                  <span className="font-semibold text-amber-700 dark:text-amber-400">
+                    Needs Documentation Verification
+                  </span>
+                  <span className="text-muted-foreground">
+                    Last verified: {s.last_verified ? s.last_verified.split("T")[0].split("-").reverse().join("/") : "20/09/2026"}
+                  </span>
+                </div>
+                <h3 className="mt-1 font-bold text-sm text-foreground">{s.name}</h3>
+                <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{s.short_description || s.benefits}</p>
+              </div>
+              <div className="mt-3 pt-2 border-t border-border/60 flex items-center justify-between">
+                <span className="text-[11px] text-muted-foreground">
+                  {s.state ? s.state : "Central"} · {s.category}
+                </span>
+                <a
+                  href={targetUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-lg bg-secondary px-2.5 py-1 text-xs font-semibold hover:bg-secondary/80 text-foreground transition"
+                >
+                  Verify on Portal <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -539,7 +574,31 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
         </span>
       </div>
 
-      <h3 className="mt-3 font-display text-lg font-bold">{scheme.name}</h3>
+      {/* Official vs myScheme Source Indicator */}
+      <div className="mt-3 flex items-center justify-between text-[11px]">
+        <span
+          className={`inline-flex items-center gap-1 font-semibold ${
+            showOfficial ? "text-emerald-600 dark:text-emerald-400" : "text-blue-600 dark:text-blue-400"
+          }`}
+        >
+          {showOfficial ? (
+            <>
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              ✓ Official Government Source
+            </>
+          ) : (
+            <>
+              <ExternalLink className="h-3.5 w-3.5" />
+              ↗ myScheme Government Source
+            </>
+          )}
+        </span>
+        <span className="text-muted-foreground font-normal">
+          Last verified: {scheme.last_verified ? scheme.last_verified.split("T")[0].split("-").reverse().join("/") : "20/09/2026"}
+        </span>
+      </div>
+
+      <h3 className="mt-2 font-display text-lg font-bold">{scheme.name}</h3>
       {scheme.ministry && <p className="text-xs text-muted-foreground">{scheme.ministry}</p>}
       <p className="mt-3 text-sm text-muted-foreground">{scheme.short_description}</p>
 
@@ -606,7 +665,7 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
             onClick={onApplyClick}
             className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
           >
-            Official site — Apply <ExternalLink className="h-4 w-4" />
+            Apply on Official Government Portal <ExternalLink className="h-4 w-4" />
           </a>
         ) : (
           <a
@@ -614,9 +673,9 @@ function SchemeCard({ match }: { match: SchemeMatch }) {
             target="_blank"
             rel="noreferrer"
             onClick={onApplyClick}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-primary px-5 py-2.5 text-sm font-semibold text-primary transition hover:bg-secondary"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-blue-600 bg-blue-600/10 px-5 py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 transition hover:bg-blue-600 hover:text-white"
           >
-            Find on myScheme <ExternalLink className="h-4 w-4" />
+            View on myScheme <ExternalLink className="h-4 w-4" />
           </a>
         )}
         <button

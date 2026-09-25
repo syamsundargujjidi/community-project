@@ -186,7 +186,7 @@ export function checkGeography(scheme: Scheme, p: UserProfile): GeoResult {
       return {
         ok: false,
         label: "State",
-        detail: `Only for residents of ${scheme.state ?? (scheme as ScopedScheme).available_states?.join(", ")}`,
+        detail: `This scheme is available only to residents of ${scheme.state ?? (scheme as ScopedScheme).available_states?.join(", ")}. Your selected state is ${p.state}.`,
       };
   }
 }
@@ -429,15 +429,20 @@ export function evaluateScheme(scheme: Scheme, p: UserProfile): SchemeMatch {
   // ---- Occupation (OR list) -----------------------------------------
   {
     const r = listHas(scheme.occupations, p.occupation);
-    if (r === "yes") {
-      add("occupation", "Occupation", "pass", `${p.occupation} — matched`);
+    if (r === "yes" || r === "any" || r === "empty") {
+      add(
+        "occupation",
+        "Occupation",
+        "pass",
+        r === "yes" ? `${p.occupation} — matched` : "Open to all citizen occupations",
+      );
       reasons.push("occupationMatches");
     } else if (r === "unknown") {
       add("occupation", "Occupation", "unknown", "Occupation not provided");
     } else if (r === "no") {
       // parent occupation can satisfy child/student schemes
       const viaParent = listHas(scheme.occupations, p.parentOccupation);
-      if (viaParent === "yes") {
+      if (viaParent === "yes" || viaParent === "any" || viaParent === "empty") {
         add(
           "occupation",
           "Occupation",

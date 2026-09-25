@@ -39,6 +39,15 @@ export function Header() {
           >
             {t("nav.check")}
           </Link>
+          {user?.email === "gujjidisyamsundar@gmail.com" && (
+            <Link
+              to="/database"
+              className="hover:text-foreground text-primary font-semibold"
+              activeProps={{ className: "text-foreground font-bold" }}
+            >
+              Admin DB
+            </Link>
+          )}
           <Link
             to="/about"
             className="hover:text-foreground"

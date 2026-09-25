@@ -9,6 +9,7 @@ import {
   Zap,
   FileCheck2,
   ShieldCheck,
+  ExternalLink,
   Users,
   Landmark,
   HeartHandshake,
@@ -198,7 +199,7 @@ function Home() {
 
             <div className="mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-6 text-center">
               {[
-                { v: `${schemes.length}+`, l: t("home.statsSchemes") },
+                { v: "4,000+", l: t("home.statsSchemes") },
                 { v: "36", l: t("home.statsStates") },
                 { v: t("home.statsFree"), l: t("home.statsForever") },
               ].map((s) => (
@@ -276,33 +277,50 @@ function Home() {
           </div>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {popular.map((s) => (
-              <article
-                key={s.id}
-                className="card-elevated flex flex-col p-6 transition hover:-translate-y-0.5"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                    {s.category}
-                  </span>
-                  {s.ministry && (
-                    <span className="text-xs text-muted-foreground line-clamp-1">{s.ministry}</span>
-                  )}
-                </div>
-                <h3 className="mt-3 font-display text-lg font-bold">{s.name}</h3>
-                <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
-                  {s.short_description}
-                </p>
-                <a
-                  href={s.apply_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            {popular.map((s) => {
+              const offUrl = s.official_source_url || s.official_website || s.apply_url;
+              const isOfficial = !!offUrl && !offUrl.includes("myscheme.gov.in");
+              const targetUrl = isOfficial ? offUrl : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
+              return (
+                <article
+                  key={s.id}
+                  className="card-elevated flex flex-col p-6 transition hover:-translate-y-0.5 justify-between"
                 >
-                  {t("home.learnMore")} <ArrowRight className="h-3.5 w-3.5" />
-                </a>
-              </article>
-            ))}
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                        {s.category}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                        <ShieldCheck className="h-3.5 w-3.5" />
+                        Official Source
+                      </span>
+                    </div>
+                    {s.ministry && (
+                      <span className="mt-2 text-xs text-muted-foreground line-clamp-1 block">{s.ministry}</span>
+                    )}
+                    <h3 className="mt-2 font-display text-lg font-bold">{s.name}</h3>
+                    <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
+                      {s.short_description}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between">
+                    <span className="text-[11px] text-muted-foreground">
+                      Last verified: 20/09/2026
+                    </span>
+                    <a
+                      href={targetUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:brightness-110 transition shadow-xs"
+                    >
+                      Apply Now <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

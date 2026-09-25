@@ -1,6 +1,8 @@
 import type { Scheme } from "./schemes";
+import { CENTRAL_SCHEMES } from "./schemes-data/central-schemes";
+import { STATE_SCHEMES } from "./schemes-data/state-schemes";
 
-export const DEFAULT_SCHEMES: Scheme[] = [
+const BASE_SCHEMES: Scheme[] = [
   {
     id: "sch-pm-kisan",
     slug: "pm-kisan",
@@ -1044,3 +1046,13 @@ export const DEFAULT_SCHEMES: Scheme[] = [
     link_fail_count: 0,
   },
 ];
+
+const schemeMap = new Map<string, Scheme>();
+for (const s of [...BASE_SCHEMES, ...CENTRAL_SCHEMES, ...STATE_SCHEMES]) {
+  const key = s.slug || s.id;
+  if (!schemeMap.has(key)) {
+    schemeMap.set(key, s);
+  }
+}
+
+export const DEFAULT_SCHEMES: Scheme[] = Array.from(schemeMap.values());
