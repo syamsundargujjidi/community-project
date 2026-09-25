@@ -5,14 +5,80 @@ import { searchSchemes } from "./schemes-db.server";
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const MODEL = "google/gemini-2.5-flash";
 
+interface ChatMessage {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
+
+interface ChatPayload {
+  model?: string;
+  messages: ChatMessage[];
+  temperature?: number;
+}
+
 async function callGateway(body: unknown): Promise<string> {
-  const key = process.env.LOVABLE_API_KEY || process.env.GEMINI_API_KEY;
-  if (!key) throw new Error("AI API key missing");
+  const lovableKey = process.env.LOVABLE_API_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
+
+  if (!lovableKey && !geminiKey) {
+    throw new Error("AI API key missing");
+  }
+
+  const payload = body as ChatPayload;
+
+  // If Gemini API key is available and no Lovable key, call Google's Gemini endpoint directly
+  if (geminiKey && !lovableKey) {
+    const systemMsg = payload.messages?.find((m) => m.role === "system");
+    const nonSystemMsgs = (payload.messages || []).filter((m) => m.role !== "system");
+
+    const contents = nonSystemMsgs.map((m) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    }));
+
+    const geminiBody: Record<string, any> = {
+      contents,
+      generationConfig: {
+        temperature: payload.temperature ?? 0.4,
+      },
+    };
+
+    if (systemMsg) {
+      geminiBody.system_instruction = {
+        parts: [{ text: systemMsg.content }],
+      };
+    }
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(geminiBody),
+      },
+    );
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Gemini API ${res.status}: ${text.slice(0, 200)}`);
+    }
+
+    const json = (await res.json()) as {
+      candidates?: Array<{
+        content?: {
+          parts?: Array<{ text?: string }>;
+        };
+      }>;
+    };
+    return json.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  }
+
+  // Otherwise fallback to Lovable AI Gateway
   const res = await fetch(GATEWAY_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
+      Authorization: `Bearer ${lovableKey || geminiKey}`,
     },
     body: JSON.stringify(body),
   });

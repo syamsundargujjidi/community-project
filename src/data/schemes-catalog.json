@@ -883,9 +883,9 @@
     ],
     "applicationProcedure": "Apply online at the official portal or submit application via nearest Common Service Centre (CSC) / Citizen Service Portal.",
     "officialUrl": "https://pmsma.mohfw.gov.in/",
-    "official_website": "https://pmsma.nhm.gov.in/",
-    "official_source_url": "https://pmsma.nhm.gov.in/",
-    "apply_url": "https://pmsma.nhm.gov.in/",
+    "official_website": "https://pmsma.mohfw.gov.in/",
+    "official_source_url": "https://pmsma.mohfw.gov.in/",
+    "apply_url": "https://pmsma.mohfw.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Pradhan%20Mantri%20Surakshit%20Matritva%20Abhiyan%20(PMSMA)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of India",
     "sourceType": "Official Government",
@@ -903,7 +903,7 @@
     ],
     "available_states": [],
     "link_status": "working",
-    "applicationUrl": "https://pmsma.nhm.gov.in/",
+    "applicationUrl": "https://pmsma.mohfw.gov.in/",
     "registrationUrl": "https://www.myscheme.gov.in/search?q=Pradhan%20Mantri%20Surakshit%20Matritva%20Abhiyan%20(PMSMA)",
     "officialInfoUrl": "https://www.myscheme.gov.in/search?q=Pradhan%20Mantri%20Surakshit%20Matritva%20Abhiyan%20(PMSMA)"
   },
@@ -1261,9 +1261,9 @@
     ],
     "applicationProcedure": "Apply online at the official portal or submit application via nearest Common Service Centre (CSC) / Citizen Service Portal.",
     "officialUrl": "https://swachhbharaturban.gov.in/",
-    "official_website": "https://sbmurban.org/",
-    "official_source_url": "https://sbmurban.org/",
-    "apply_url": "https://sbmurban.org/",
+    "official_website": "https://swachhbharatmission.ddws.gov.in/",
+    "official_source_url": "https://swachhbharatmission.ddws.gov.in/",
+    "apply_url": "https://swachhbharatmission.ddws.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Swachh%20Bharat%20Mission%20-%20Urban%20(Individual%20Household%20Latrine%20Scheme)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of India",
     "sourceType": "Official Government",
@@ -1281,7 +1281,7 @@
     ],
     "available_states": [],
     "link_status": "working",
-    "applicationUrl": "https://sbmurban.org/",
+    "applicationUrl": "https://swachhbharatmission.ddws.gov.in/",
     "registrationUrl": "https://www.myscheme.gov.in/search?q=Swachh%20Bharat%20Mission%20-%20Urban%20(Individual%20Household%20Latrine%20Scheme)",
     "officialInfoUrl": "https://www.myscheme.gov.in/search?q=Swachh%20Bharat%20Mission%20-%20Urban%20(Individual%20Household%20Latrine%20Scheme)"
   },
@@ -1335,10 +1335,10 @@
       "Income Certificate issued by competent Revenue Authority / Tahsildar"
     ],
     "applicationProcedure": "Apply online at the official portal or submit application via nearest Common Service Centre (CSC) / Citizen Service Portal.",
-    "officialUrl": "https://pmayg.nic.in/",
-    "official_website": "https://pmayg.nic.in/",
-    "official_source_url": "https://pmayg.nic.in/",
-    "apply_url": "https://pmayg.nic.in/",
+    "officialUrl": "https://pmayg.gov.in/",
+    "official_website": "https://pmayg.gov.in/",
+    "official_source_url": "https://pmayg.gov.in/",
+    "apply_url": "https://pmayg.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Pradhan%20Mantri%20Awaas%20Yojana%20-%20Gramin%20(PMAY-G)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of India",
     "sourceType": "Official Government",
@@ -1356,9 +1356,9 @@
     ],
     "available_states": [],
     "link_status": "working",
-    "applicationUrl": "https://pmayg.nic.in/",
-    "registrationUrl": "https://pmayg.nic.in/",
-    "officialInfoUrl": "https://pmayg.nic.in/"
+    "applicationUrl": "https://pmayg.gov.in/",
+    "registrationUrl": "https://pmayg.gov.in/",
+    "officialInfoUrl": "https://pmayg.gov.in/"
   },
   {
     "schemeId": "sch-mahatma-gandhi-national-rural-employment-guarantee-scheme-mgnregs",
@@ -1646,10 +1646,10 @@
       "Income Certificate issued by competent Revenue Authority / Tahsildar"
     ],
     "applicationProcedure": "Apply online at the official portal or submit application via nearest Common Service Centre (CSC) / Citizen Service Portal.",
-    "officialUrl": "https://nsap.nic.in/",
-    "official_website": "https://nsap.nic.in/",
-    "official_source_url": "https://nsap.nic.in/",
-    "apply_url": "https://nsap.nic.in/",
+    "officialUrl": "https://nsap.dord.gov.in/",
+    "official_website": "https://nsap.dord.gov.in/",
+    "official_source_url": "https://nsap.dord.gov.in/",
+    "apply_url": "https://nsap.dord.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Indira%20Gandhi%20National%20Old%20Age%20Pension%20Scheme%20(IGNOAPS%20-%20NSAP)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of India",
     "sourceType": "Official Government",
@@ -1667,7 +1667,7 @@
     ],
     "available_states": [],
     "link_status": "working",
-    "applicationUrl": "https://nsap.nic.in/",
+    "applicationUrl": "https://nsap.dord.gov.in/",
     "registrationUrl": "https://www.myscheme.gov.in/search?q=Indira%20Gandhi%20National%20Old%20Age%20Pension%20Scheme%20(IGNOAPS%20-%20NSAP)",
     "officialInfoUrl": "https://www.myscheme.gov.in/search?q=Indira%20Gandhi%20National%20Old%20Age%20Pension%20Scheme%20(IGNOAPS%20-%20NSAP)"
   },
@@ -1722,10 +1722,10 @@
       "Bank or Post Office passbook"
     ],
     "applicationProcedure": "Apply online at the official portal or submit application via nearest Common Service Centre (CSC) / Citizen Service Portal.",
-    "officialUrl": "https://nsap.nic.in/",
-    "official_website": "https://nsap.nic.in/",
-    "official_source_url": "https://nsap.nic.in/",
-    "apply_url": "https://nsap.nic.in/",
+    "officialUrl": "https://nsap.dord.gov.in/",
+    "official_website": "https://nsap.dord.gov.in/",
+    "official_source_url": "https://nsap.dord.gov.in/",
+    "apply_url": "https://nsap.dord.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Indira%20Gandhi%20National%20Widow%20Pension%20Scheme%20(IGNWPS%20-%20NSAP)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of India",
     "sourceType": "Official Government",
@@ -1743,7 +1743,7 @@
     ],
     "available_states": [],
     "link_status": "working",
-    "applicationUrl": "https://nsap.nic.in/",
+    "applicationUrl": "https://nsap.dord.gov.in/",
     "registrationUrl": "https://www.myscheme.gov.in/search?q=Indira%20Gandhi%20National%20Widow%20Pension%20Scheme%20(IGNWPS%20-%20NSAP)",
     "officialInfoUrl": "https://www.myscheme.gov.in/search?q=Indira%20Gandhi%20National%20Widow%20Pension%20Scheme%20(IGNWPS%20-%20NSAP)"
   },
@@ -3852,9 +3852,9 @@
     ],
     "applicationProcedure": "Apply online at official portal https://jnanabhumi.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
     "officialUrl": "https://jnanabhumi.ap.gov.in/",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://jnanabhumi.ap.gov.in/",
+    "official_source_url": "https://jnanabhumi.ap.gov.in/",
+    "apply_url": "https://jnanabhumi.ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Thalliki%20Vandanam%20Scheme%20(Mother%20Assistance%20for%20Children%20School%20Education)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -3876,9 +3876,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://jnanabhumi.ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-dr-ysr-ntr-aarogyasri-universal-health-scheme",
@@ -3932,11 +3932,11 @@
       "AP Rice card / Ration card or Ayushman Bharat PM-JAY Letter",
       "Active mobile number"
     ],
-    "applicationProcedure": "Apply online at official portal https://aarogyasri.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://aarogyasri.ap.gov.in/",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://drntrvaidyaseva.ap.gov.in/",
+    "official_website": "https://drntrvaidyaseva.ap.gov.in/",
+    "official_source_url": "https://drntrvaidyaseva.ap.gov.in/",
+    "apply_url": "https://drntrvaidyaseva.ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Dr.%20YSR%20%2F%20NTR%20Aarogyasri%20Universal%20Health%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -3958,9 +3958,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://drntrvaidyaseva.ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-annadata-sukhibhava-rythu-bharosa-farmer-financial-assistance",
@@ -4351,9 +4351,9 @@
     ],
     "applicationProcedure": "Apply online at official portal https://sspensions.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
     "officialUrl": "https://sspensions.ap.gov.in/",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "official_website": "https://sspensions.ap.gov.in/",
+    "official_source_url": "https://sspensions.ap.gov.in/",
+    "apply_url": "https://sspensions.ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=NTR%20Bharosa%20Pension%20-%20Chronic%20Kidney%20Disease%20(CKD)%20%26%20Dialysis%20Patients%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -4375,9 +4375,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://sspensions.ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-cheyutha-financial-assistance-for-women-aged-45-60",
@@ -4445,11 +4445,11 @@
       "AP Rice Card / BPL card",
       "Bank passbook with IFSC"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Cheyutha%20(Financial%20Assistance%20for%20Women%20Aged%2045-60)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -4471,9 +4471,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-kapu-nestham",
@@ -4539,11 +4539,11 @@
       "AP Rice Card / BPL card",
       "Bank passbook with IFSC"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Kapu%20Nestham%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -4565,9 +4565,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-ebc-nestham",
@@ -4627,11 +4627,11 @@
       "AP Rice Card / BPL card",
       "Bank passbook with IFSC"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20EBC%20Nestham%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -4653,9 +4653,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-vahana-mitra",
@@ -4801,11 +4801,11 @@
       "White ration card / AP Rice card",
       "Bank passbook"
     ],
-    "applicationProcedure": "Apply online at official portal https://aphandlooms.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://aphandlooms.gov.in/",
-    "official_website": "https://aphandlooms.gov.in/",
-    "official_source_url": "https://aphandlooms.gov.in/",
-    "apply_url": "https://aphandlooms.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Nethanna%20Nestham%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -4828,9 +4828,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aphandlooms.gov.in/",
-    "registrationUrl": "https://aphandlooms.gov.in/",
-    "officialInfoUrl": "https://aphandlooms.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-matsyakara-bharosa",
@@ -4981,11 +4981,11 @@
       "AP Rice card",
       "Bank passbook"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Jagananna%20Chedodu%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -5008,9 +5008,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-aasara-shg-loan-reimbursement-for-dwcra-women",
@@ -5069,9 +5069,9 @@
     ],
     "applicationProcedure": "Apply online at official portal https://serp.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
     "officialUrl": "https://serp.ap.gov.in/",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Aasara%20(SHG%20Loan%20Reimbursement%20for%20DWCRA%20Women)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -5094,9 +5094,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-sunna-vaddi-zero-interest-crop-loans-for-farmers",
@@ -5494,11 +5494,11 @@
       "Bank account passbook (linked with Aadhaar)",
       "Active mobile number"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Jagananna%20Thodu%20(Interest-Free%20Working%20Capital%20Loans%20for%20Street%20Vendors)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -5521,9 +5521,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-ysr-bima-free-insurance-scheme-for-bpl-primary-breadwinners",
@@ -5752,11 +5752,11 @@
       "AP Rice Card / BPL card",
       "Bank passbook with IFSC"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
-    "official_website": "https://navasakam.ap.gov.in/",
-    "official_source_url": "https://navasakam.ap.gov.in/",
-    "apply_url": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://sspensions.ap.gov.in/",
+    "official_source_url": "https://sspensions.ap.gov.in/",
+    "apply_url": "https://sspensions.ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=YSR%20Kalyanamasthu%20%26%20YSR%20Shaadi%20Tohfa%20(Marriage%20Financial%20Incentive)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -5778,9 +5778,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://navasakam.ap.gov.in/",
-    "registrationUrl": "https://navasakam.ap.gov.in/",
-    "officialInfoUrl": "https://navasakam.ap.gov.in/"
+    "applicationUrl": "https://sspensions.ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-ap-dr-b-r-ambedkar-overseas-vidya-nidhi-for-sc-st-students",
@@ -6310,8 +6310,8 @@
       "Senior Advocate guidance affiliation letter from District Bar Association",
       "Bank passbook"
     ],
-    "applicationProcedure": "Apply online at official portal https://navasakam.ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
-    "officialUrl": "https://navasakam.ap.gov.in/",
+    "applicationProcedure": "Apply online at official portal https://ap.gov.in/ or submit through your local Grama / Ward Sachivalayam (Village / Ward Secretariat) in Andhra Pradesh.",
+    "officialUrl": "https://ap.gov.in/",
     "official_website": "https://ysrlawnestham.ap.gov.in/",
     "official_source_url": "https://ysrlawnestham.ap.gov.in/",
     "apply_url": "https://ysrlawnestham.ap.gov.in/",
@@ -7855,9 +7855,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/mahila-kalyan or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/mahila-kalyan",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Chief%20Minister's%20Monthly%20Cash%20Assistance%20for%20Women%20Heads%20of%20Family%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -7877,9 +7877,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-girl-child-protection-fixed-deposit-scheme",
@@ -7937,9 +7937,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/girl-child or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/girl-child",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Girl%20Child%20Protection%20%26%20Fixed%20Deposit%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -7959,9 +7959,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-marriage-assistance-scheme-for-destitute-girls-orphan-women",
@@ -8100,9 +8100,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/maternity-kit or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/maternity-kit",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Comprehensive%20Maternity%20Nutrition%20%26%20Care%20Kit%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8122,9 +8122,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-free-bus-travel-for-women-in-state-transport-undertakings",
@@ -8345,9 +8345,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/skill-mission or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/skill-mission",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "official_website": "https://www.apssdc.in/",
+    "official_source_url": "https://www.apssdc.in/",
+    "apply_url": "https://www.apssdc.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Skill%20Development%20Mission%20%26%20Free%20Placement%20Training%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8368,9 +8368,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://www.apssdc.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-youth-internship-apprenticeship-stipend-scheme",
@@ -8519,9 +8519,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/youth-startup or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/youth-startup",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Chief%20Minister's%20Youth%20Self-Employment%20%26%20Startup%20Loan%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8542,9 +8542,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-chief-minister-s-comprehensive-cashless-health-scheme",
@@ -8601,10 +8601,10 @@
       "Income Certificate issued by Revenue Authority of Andhra Pradesh"
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/health-scheme or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
-    "officialUrl": "https://ap.gov.in/health-scheme",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Chief%20Minister's%20Comprehensive%20Cashless%20Health%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8624,9 +8624,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-free-dialysis-thalassemia-financial-assistance-scheme",
@@ -8682,10 +8682,10 @@
       "Bank passbook"
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/dialysis-relief or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
-    "officialUrl": "https://ap.gov.in/dialysis-relief",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Free%20Dialysis%20%26%20Thalassemia%20Financial%20Assistance%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8705,9 +8705,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-emergency-medical-ambulance-service-108-104-mobile-units",
@@ -8763,10 +8763,10 @@
       "Mobile number linked with Aadhaar"
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/ambulance or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
-    "officialUrl": "https://ap.gov.in/ambulance",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Emergency%20Medical%20Ambulance%20Service%20(108%20%26%20104%20Mobile%20Units)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8786,9 +8786,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-rare-diseases-pediatric-heart-surgery-free-treatment-scheme",
@@ -8845,10 +8845,10 @@
       "Income Certificate issued by Revenue Authority of Andhra Pradesh"
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/child-surgery or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
-    "officialUrl": "https://ap.gov.in/child-surgery",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "officialUrl": "https://ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Rare%20Diseases%20%26%20Pediatric%20Heart%20Surgery%20Free%20Treatment%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -8868,9 +8868,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-social-security-old-age-pension-scheme-oap",
@@ -9599,9 +9599,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/motorized-tricycle or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/motorized-tricycle",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Free%20Motorized%20Tricycle%20%26%20Battery%20Wheelchair%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -9621,9 +9621,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-scholarship-for-specially-abled-students-primary-to-higher-education",
@@ -9769,9 +9769,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/intercaste-marriage or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/intercaste-marriage",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Inter-Caste%20Marriage%20Incentive%20Scheme%20(Ambedkar%20Scheme)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -9791,9 +9791,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-backward-classes-obc-mbc-economic-development-loan-subsidy",
@@ -10111,9 +10111,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/artisan-kits or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/artisan-kits",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Traditional%20Artisans%20%26%20Caste%20Occupation%20Tool%20Kit%20Distribution%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -10134,9 +10134,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-chief-minister-s-rural-urban-pucca-housing-scheme",
@@ -10443,9 +10443,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/industries or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/industries",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Chief%20Minister's%20Micro%20%26%20Small%20Enterprise%20Subsidy%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -10466,9 +10466,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-power-tariff-subsidy-for-micro-small-manufacturing-units",
@@ -10525,9 +10525,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/msme-power or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/msme-power",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Power%20Tariff%20Subsidy%20for%20Micro%20%26%20Small%20Manufacturing%20Units%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -10547,9 +10547,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-women-entrepreneurship-incentive-special-concession-package",
@@ -11023,9 +11023,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/sheep-goat or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/sheep-goat",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Sheep%20%26%20Goat%20Breeding%20Unit%20Distribution%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11046,9 +11046,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-cash-incentive-awards-for-national-international-sports-medalists",
@@ -11109,9 +11109,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/sports-awards or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/sports-awards",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Cash%20Incentive%20Awards%20for%20National%20%26%20International%20Sports%20Medalists%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11132,9 +11132,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-rural-sports-equipment-gymnasium-grants-for-youth-clubs",
@@ -11195,9 +11195,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/youth-sports or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/youth-sports",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Rural%20Sports%20Equipment%20%26%20Gymnasium%20Grants%20for%20Youth%20Clubs%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11218,9 +11218,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-auto-rickshaw-taxi-driver-welfare-assistance-scheme",
@@ -11365,9 +11365,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/gig-welfare or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/gig-welfare",
-    "official_website": "https://aarogyasri.ap.gov.in/",
-    "official_source_url": "https://aarogyasri.ap.gov.in/",
-    "apply_url": "https://aarogyasri.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Gig%20%26%20Platform%20Workers%20Social%20Security%20%26%20Accident%20Insurance%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11388,9 +11388,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aarogyasri.ap.gov.in/",
-    "registrationUrl": "https://aarogyasri.ap.gov.in/",
-    "officialInfoUrl": "https://aarogyasri.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-safai-karamchari-sanitation-workers-modern-protective-gear-insurance",
@@ -11700,9 +11700,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/rooftop-solar or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/rooftop-solar",
-    "official_website": "https://gramawardsachivalayam.ap.gov.in/",
-    "official_source_url": "https://gramawardsachivalayam.ap.gov.in/",
-    "apply_url": "https://gramawardsachivalayam.ap.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Rooftop%20Solar%20Net%20Metering%20%26%20State%20Top-Up%20Subsidy%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11722,9 +11722,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "registrationUrl": "https://gramawardsachivalayam.ap.gov.in/",
-    "officialInfoUrl": "https://gramawardsachivalayam.ap.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-handloom-weaver-family-annual-financial-assistance-scheme",
@@ -11784,9 +11784,9 @@
     ],
     "applicationProcedure": "Apply online at https://ap.gov.in/weaver-welfare or visit your nearest Citizen Service Centre / District Collectorate in Andhra Pradesh.",
     "officialUrl": "https://ap.gov.in/weaver-welfare",
-    "official_website": "https://aphandlooms.gov.in/",
-    "official_source_url": "https://aphandlooms.gov.in/",
-    "apply_url": "https://aphandlooms.gov.in/",
+    "official_website": "https://ap.gov.in/",
+    "official_source_url": "https://ap.gov.in/",
+    "apply_url": "https://ap.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Andhra%20Pradesh%20Handloom%20Weaver%20Family%20Annual%20Financial%20Assistance%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Andhra Pradesh",
     "sourceType": "Official Government",
@@ -11807,9 +11807,9 @@
       "Andhra Pradesh"
     ],
     "link_status": "working",
-    "applicationUrl": "https://aphandlooms.gov.in/",
-    "registrationUrl": "https://aphandlooms.gov.in/",
-    "officialInfoUrl": "https://aphandlooms.gov.in/"
+    "applicationUrl": "https://ap.gov.in/",
+    "registrationUrl": "https://ap.gov.in/",
+    "officialInfoUrl": "https://ap.gov.in/"
   },
   {
     "schemeId": "sch-andhra-pradesh-andhra-pradesh-mulberry-sericulture-cocoon-production-incentive-grant",
@@ -11952,9 +11952,9 @@
     ],
     "applicationProcedure": "Apply online at https://telangana.gov.in/agriculture or visit your nearest Citizen Service Centre / District Collectorate in Telangana.",
     "officialUrl": "https://telangana.gov.in/agriculture",
-    "official_website": "https://rythubandhu.telangana.gov.in/",
-    "official_source_url": "https://rythubandhu.telangana.gov.in/",
-    "apply_url": "https://rythubandhu.telangana.gov.in/",
+    "official_website": "https://telangana.gov.in/",
+    "official_source_url": "https://telangana.gov.in/",
+    "apply_url": "https://telangana.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Telangana%20Rythu%20%2F%20Kisan%20Input%20Subsidy%20%26%20Farmer%20Relief%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Telangana",
     "sourceType": "Official Government",
@@ -11974,9 +11974,9 @@
       "Telangana"
     ],
     "link_status": "working",
-    "applicationUrl": "https://rythubandhu.telangana.gov.in/",
-    "registrationUrl": "https://rythubandhu.telangana.gov.in/",
-    "officialInfoUrl": "https://rythubandhu.telangana.gov.in/"
+    "applicationUrl": "https://telangana.gov.in/",
+    "registrationUrl": "https://telangana.gov.in/",
+    "officialInfoUrl": "https://telangana.gov.in/"
   },
   {
     "schemeId": "sch-telangana-telangana-crop-damage-relief-natural-calamity-compensation",
@@ -12368,9 +12368,9 @@
     ],
     "applicationProcedure": "Apply online at https://telangana.gov.in/energy or visit your nearest Citizen Service Centre / District Collectorate in Telangana.",
     "officialUrl": "https://telangana.gov.in/energy",
-    "official_website": "https://rythubandhu.telangana.gov.in/",
-    "official_source_url": "https://rythubandhu.telangana.gov.in/",
-    "apply_url": "https://rythubandhu.telangana.gov.in/",
+    "official_website": "https://telangana.gov.in/",
+    "official_source_url": "https://telangana.gov.in/",
+    "apply_url": "https://telangana.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Telangana%20Free%20Agricultural%20Electricity%20Supply%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Telangana",
     "sourceType": "Official Government",
@@ -12390,9 +12390,9 @@
       "Telangana"
     ],
     "link_status": "working",
-    "applicationUrl": "https://rythubandhu.telangana.gov.in/",
-    "registrationUrl": "https://rythubandhu.telangana.gov.in/",
-    "officialInfoUrl": "https://rythubandhu.telangana.gov.in/"
+    "applicationUrl": "https://telangana.gov.in/",
+    "registrationUrl": "https://telangana.gov.in/",
+    "officialInfoUrl": "https://telangana.gov.in/"
   },
   {
     "schemeId": "sch-telangana-telangana-integrated-inland-fisheries-fish-farming-incentive",
@@ -16899,9 +16899,9 @@
     ],
     "applicationProcedure": "Apply online at https://telangana.gov.in/solar-agri or visit your nearest Citizen Service Centre / District Collectorate in Telangana.",
     "officialUrl": "https://telangana.gov.in/solar-agri",
-    "official_website": "https://rythubandhu.telangana.gov.in/",
-    "official_source_url": "https://rythubandhu.telangana.gov.in/",
-    "apply_url": "https://rythubandhu.telangana.gov.in/",
+    "official_website": "https://telangana.gov.in/",
+    "official_source_url": "https://telangana.gov.in/",
+    "apply_url": "https://telangana.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Telangana%20Solar%20Agricultural%20Pump%20Set%20Subsidy%20Scheme%20(KUSUM%20State%20Component)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Telangana",
     "sourceType": "Official Government",
@@ -16921,9 +16921,9 @@
       "Telangana"
     ],
     "link_status": "working",
-    "applicationUrl": "https://rythubandhu.telangana.gov.in/",
-    "registrationUrl": "https://rythubandhu.telangana.gov.in/",
-    "officialInfoUrl": "https://rythubandhu.telangana.gov.in/"
+    "applicationUrl": "https://telangana.gov.in/",
+    "registrationUrl": "https://telangana.gov.in/",
+    "officialInfoUrl": "https://telangana.gov.in/"
   },
   {
     "schemeId": "sch-telangana-telangana-rooftop-solar-net-metering-state-top-up-subsidy",
@@ -30048,9 +30048,9 @@
     ],
     "applicationProcedure": "Apply online at https://kerala.gov.in/old-age-pension or visit your nearest Citizen Service Centre / District Collectorate in Kerala.",
     "officialUrl": "https://kerala.gov.in/old-age-pension",
-    "official_website": "https://welfarepension.lsgkerala.gov.in/",
-    "official_source_url": "https://welfarepension.lsgkerala.gov.in/",
-    "apply_url": "https://welfarepension.lsgkerala.gov.in/",
+    "official_website": "https://kerala.gov.in/",
+    "official_source_url": "https://kerala.gov.in/",
+    "apply_url": "https://kerala.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Kerala%20Social%20Security%20Old%20Age%20Pension%20Scheme%20(OAP)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Kerala",
     "sourceType": "Official Government",
@@ -30070,9 +30070,9 @@
       "Kerala"
     ],
     "link_status": "working",
-    "applicationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "registrationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "officialInfoUrl": "https://welfarepension.lsgkerala.gov.in/"
+    "applicationUrl": "https://kerala.gov.in/",
+    "registrationUrl": "https://kerala.gov.in/",
+    "officialInfoUrl": "https://kerala.gov.in/"
   },
   {
     "schemeId": "sch-kerala-kerala-destitute-widow-single-woman-monthly-pension-scheme",
@@ -30130,9 +30130,9 @@
     ],
     "applicationProcedure": "Apply online at https://kerala.gov.in/widow-pension or visit your nearest Citizen Service Centre / District Collectorate in Kerala.",
     "officialUrl": "https://kerala.gov.in/widow-pension",
-    "official_website": "https://welfarepension.lsgkerala.gov.in/",
-    "official_source_url": "https://welfarepension.lsgkerala.gov.in/",
-    "apply_url": "https://welfarepension.lsgkerala.gov.in/",
+    "official_website": "https://kerala.gov.in/",
+    "official_source_url": "https://kerala.gov.in/",
+    "apply_url": "https://kerala.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Kerala%20Destitute%20Widow%20%26%20Single%20Woman%20Monthly%20Pension%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Kerala",
     "sourceType": "Official Government",
@@ -30152,9 +30152,9 @@
       "Kerala"
     ],
     "link_status": "working",
-    "applicationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "registrationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "officialInfoUrl": "https://welfarepension.lsgkerala.gov.in/"
+    "applicationUrl": "https://kerala.gov.in/",
+    "registrationUrl": "https://kerala.gov.in/",
+    "officialInfoUrl": "https://kerala.gov.in/"
   },
   {
     "schemeId": "sch-kerala-kerala-traditional-artisans-folk-artists-monthly-pension-scheme",
@@ -30214,9 +30214,9 @@
     ],
     "applicationProcedure": "Apply online at https://kerala.gov.in/artist-pension or visit your nearest Citizen Service Centre / District Collectorate in Kerala.",
     "officialUrl": "https://kerala.gov.in/artist-pension",
-    "official_website": "https://welfarepension.lsgkerala.gov.in/",
-    "official_source_url": "https://welfarepension.lsgkerala.gov.in/",
-    "apply_url": "https://welfarepension.lsgkerala.gov.in/",
+    "official_website": "https://kerala.gov.in/",
+    "official_source_url": "https://kerala.gov.in/",
+    "apply_url": "https://kerala.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Kerala%20Traditional%20Artisans%20%26%20Folk%20Artists%20Monthly%20Pension%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Kerala",
     "sourceType": "Official Government",
@@ -30237,9 +30237,9 @@
       "Kerala"
     ],
     "link_status": "working",
-    "applicationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "registrationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "officialInfoUrl": "https://welfarepension.lsgkerala.gov.in/"
+    "applicationUrl": "https://kerala.gov.in/",
+    "registrationUrl": "https://kerala.gov.in/",
+    "officialInfoUrl": "https://kerala.gov.in/"
   },
   {
     "schemeId": "sch-kerala-kerala-bocw-construction-labour-registration-accidental-insurance",
@@ -30636,9 +30636,9 @@
     ],
     "applicationProcedure": "Apply online at https://kerala.gov.in/disability-pension or visit your nearest Citizen Service Centre / District Collectorate in Kerala.",
     "officialUrl": "https://kerala.gov.in/disability-pension",
-    "official_website": "https://welfarepension.lsgkerala.gov.in/",
-    "official_source_url": "https://welfarepension.lsgkerala.gov.in/",
-    "apply_url": "https://welfarepension.lsgkerala.gov.in/",
+    "official_website": "https://kerala.gov.in/",
+    "official_source_url": "https://kerala.gov.in/",
+    "apply_url": "https://kerala.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Kerala%20Monthly%20Disability%20Pension%20Scheme%20(Divyangjan%20Pension)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Kerala",
     "sourceType": "Official Government",
@@ -30658,9 +30658,9 @@
       "Kerala"
     ],
     "link_status": "working",
-    "applicationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "registrationUrl": "https://welfarepension.lsgkerala.gov.in/",
-    "officialInfoUrl": "https://welfarepension.lsgkerala.gov.in/"
+    "applicationUrl": "https://kerala.gov.in/",
+    "registrationUrl": "https://kerala.gov.in/",
+    "officialInfoUrl": "https://kerala.gov.in/"
   },
   {
     "schemeId": "sch-kerala-kerala-free-motorized-tricycle-battery-wheelchair-scheme",
@@ -33072,9 +33072,9 @@
     ],
     "applicationProcedure": "Apply online at https://odisha.gov.in/agriculture or visit your nearest Citizen Service Centre / District Collectorate in Odisha.",
     "officialUrl": "https://odisha.gov.in/agriculture",
-    "official_website": "https://kalia.odisha.gov.in/",
-    "official_source_url": "https://kalia.odisha.gov.in/",
-    "apply_url": "https://kalia.odisha.gov.in/",
+    "official_website": "https://krushak.odisha.gov.in/",
+    "official_source_url": "https://krushak.odisha.gov.in/",
+    "apply_url": "https://krushak.odisha.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Odisha%20Rythu%20%2F%20Kisan%20Input%20Subsidy%20%26%20Farmer%20Relief%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Odisha",
     "sourceType": "Official Government",
@@ -33094,9 +33094,9 @@
       "Odisha"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kalia.odisha.gov.in/",
-    "registrationUrl": "https://kalia.odisha.gov.in/",
-    "officialInfoUrl": "https://kalia.odisha.gov.in/"
+    "applicationUrl": "https://krushak.odisha.gov.in/",
+    "registrationUrl": "https://krushak.odisha.gov.in/",
+    "officialInfoUrl": "https://krushak.odisha.gov.in/"
   },
   {
     "schemeId": "sch-odisha-odisha-crop-damage-relief-natural-calamity-compensation",
@@ -33488,9 +33488,9 @@
     ],
     "applicationProcedure": "Apply online at https://odisha.gov.in/energy or visit your nearest Citizen Service Centre / District Collectorate in Odisha.",
     "officialUrl": "https://odisha.gov.in/energy",
-    "official_website": "https://kalia.odisha.gov.in/",
-    "official_source_url": "https://kalia.odisha.gov.in/",
-    "apply_url": "https://kalia.odisha.gov.in/",
+    "official_website": "https://krushak.odisha.gov.in/",
+    "official_source_url": "https://krushak.odisha.gov.in/",
+    "apply_url": "https://krushak.odisha.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Odisha%20Free%20Agricultural%20Electricity%20Supply%20Scheme%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Odisha",
     "sourceType": "Official Government",
@@ -33510,9 +33510,9 @@
       "Odisha"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kalia.odisha.gov.in/",
-    "registrationUrl": "https://kalia.odisha.gov.in/",
-    "officialInfoUrl": "https://kalia.odisha.gov.in/"
+    "applicationUrl": "https://krushak.odisha.gov.in/",
+    "registrationUrl": "https://krushak.odisha.gov.in/",
+    "officialInfoUrl": "https://krushak.odisha.gov.in/"
   },
   {
     "schemeId": "sch-odisha-odisha-integrated-inland-fisheries-fish-farming-incentive",
@@ -38019,9 +38019,9 @@
     ],
     "applicationProcedure": "Apply online at https://odisha.gov.in/solar-agri or visit your nearest Citizen Service Centre / District Collectorate in Odisha.",
     "officialUrl": "https://odisha.gov.in/solar-agri",
-    "official_website": "https://kalia.odisha.gov.in/",
-    "official_source_url": "https://kalia.odisha.gov.in/",
-    "apply_url": "https://kalia.odisha.gov.in/",
+    "official_website": "https://krushak.odisha.gov.in/",
+    "official_source_url": "https://krushak.odisha.gov.in/",
+    "apply_url": "https://krushak.odisha.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=Odisha%20Solar%20Agricultural%20Pump%20Set%20Subsidy%20Scheme%20(KUSUM%20State%20Component)%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of Odisha",
     "sourceType": "Official Government",
@@ -38041,9 +38041,9 @@
       "Odisha"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kalia.odisha.gov.in/",
-    "registrationUrl": "https://kalia.odisha.gov.in/",
-    "officialInfoUrl": "https://kalia.odisha.gov.in/"
+    "applicationUrl": "https://krushak.odisha.gov.in/",
+    "registrationUrl": "https://krushak.odisha.gov.in/",
+    "officialInfoUrl": "https://krushak.odisha.gov.in/"
   },
   {
     "schemeId": "sch-odisha-odisha-rooftop-solar-net-metering-state-top-up-subsidy",
@@ -44815,9 +44815,9 @@
     ],
     "applicationProcedure": "Apply online at https://wb.gov.in/mahila-kalyan or visit your nearest Citizen Service Centre / District Collectorate in West Bengal.",
     "officialUrl": "https://wb.gov.in/mahila-kalyan",
-    "official_website": "https://kanyashree.gov.in/",
-    "official_source_url": "https://kanyashree.gov.in/",
-    "apply_url": "https://kanyashree.gov.in/",
+    "official_website": "https://wbkanyashree.gov.in/",
+    "official_source_url": "https://wbkanyashree.gov.in/",
+    "apply_url": "https://wbkanyashree.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=West%20Bengal%20Chief%20Minister's%20Monthly%20Cash%20Assistance%20for%20Women%20Heads%20of%20Family%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of West Bengal",
     "sourceType": "Official Government",
@@ -44837,9 +44837,9 @@
       "West Bengal"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kanyashree.gov.in/",
-    "registrationUrl": "https://kanyashree.gov.in/",
-    "officialInfoUrl": "https://kanyashree.gov.in/"
+    "applicationUrl": "https://wbkanyashree.gov.in/",
+    "registrationUrl": "https://wbkanyashree.gov.in/",
+    "officialInfoUrl": "https://wbkanyashree.gov.in/"
   },
   {
     "schemeId": "sch-west-bengal-west-bengal-girl-child-protection-fixed-deposit-scheme",
@@ -44979,9 +44979,9 @@
     ],
     "applicationProcedure": "Apply online at https://wb.gov.in/kalyanam or visit your nearest Citizen Service Centre / District Collectorate in West Bengal.",
     "officialUrl": "https://wb.gov.in/kalyanam",
-    "official_website": "https://kanyashree.gov.in/",
-    "official_source_url": "https://kanyashree.gov.in/",
-    "apply_url": "https://kanyashree.gov.in/",
+    "official_website": "https://wbkanyashree.gov.in/",
+    "official_source_url": "https://wbkanyashree.gov.in/",
+    "apply_url": "https://wbkanyashree.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=West%20Bengal%20Marriage%20Assistance%20Scheme%20for%20Destitute%20Girls%20%26%20Orphan%20Women%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of West Bengal",
     "sourceType": "Official Government",
@@ -45001,9 +45001,9 @@
       "West Bengal"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kanyashree.gov.in/",
-    "registrationUrl": "https://kanyashree.gov.in/",
-    "officialInfoUrl": "https://kanyashree.gov.in/"
+    "applicationUrl": "https://wbkanyashree.gov.in/",
+    "registrationUrl": "https://wbkanyashree.gov.in/",
+    "officialInfoUrl": "https://wbkanyashree.gov.in/"
   },
   {
     "schemeId": "sch-west-bengal-west-bengal-comprehensive-maternity-nutrition-care-kit-scheme",
@@ -45138,9 +45138,9 @@
     ],
     "applicationProcedure": "Apply online at https://wb.gov.in/free-bus or visit your nearest Citizen Service Centre / District Collectorate in West Bengal.",
     "officialUrl": "https://wb.gov.in/free-bus",
-    "official_website": "https://kanyashree.gov.in/",
-    "official_source_url": "https://kanyashree.gov.in/",
-    "apply_url": "https://kanyashree.gov.in/",
+    "official_website": "https://wbkanyashree.gov.in/",
+    "official_source_url": "https://wbkanyashree.gov.in/",
+    "apply_url": "https://wbkanyashree.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=West%20Bengal%20Free%20Bus%20Travel%20for%20Women%20in%20State%20Transport%20Undertakings%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of West Bengal",
     "sourceType": "Official Government",
@@ -45160,9 +45160,9 @@
       "West Bengal"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kanyashree.gov.in/",
-    "registrationUrl": "https://kanyashree.gov.in/",
-    "officialInfoUrl": "https://kanyashree.gov.in/"
+    "applicationUrl": "https://wbkanyashree.gov.in/",
+    "registrationUrl": "https://wbkanyashree.gov.in/",
+    "officialInfoUrl": "https://wbkanyashree.gov.in/"
   },
   {
     "schemeId": "sch-west-bengal-west-bengal-unemployed-youth-monthly-allowance-yuva-nidhi-scheme",
@@ -47567,9 +47567,9 @@
     ],
     "applicationProcedure": "Apply online at https://wb.gov.in/women-entrepreneurs or visit your nearest Citizen Service Centre / District Collectorate in West Bengal.",
     "officialUrl": "https://wb.gov.in/women-entrepreneurs",
-    "official_website": "https://kanyashree.gov.in/",
-    "official_source_url": "https://kanyashree.gov.in/",
-    "apply_url": "https://kanyashree.gov.in/",
+    "official_website": "https://wbkanyashree.gov.in/",
+    "official_source_url": "https://wbkanyashree.gov.in/",
+    "apply_url": "https://wbkanyashree.gov.in/",
     "fallbackUrl": "https://www.google.com/search?q=West%20Bengal%20Women%20Entrepreneurship%20Incentive%20%26%20Special%20Concession%20Package%20official%20website%20apply%20portal%20gov%20in",
     "source": "Government of West Bengal",
     "sourceType": "Official Government",
@@ -47589,9 +47589,9 @@
       "West Bengal"
     ],
     "link_status": "working",
-    "applicationUrl": "https://kanyashree.gov.in/",
-    "registrationUrl": "https://kanyashree.gov.in/",
-    "officialInfoUrl": "https://kanyashree.gov.in/"
+    "applicationUrl": "https://wbkanyashree.gov.in/",
+    "registrationUrl": "https://wbkanyashree.gov.in/",
+    "officialInfoUrl": "https://wbkanyashree.gov.in/"
   },
   {
     "schemeId": "sch-west-bengal-west-bengal-free-rice-foodgrain-distribution-nfsa-state-public-distribution",

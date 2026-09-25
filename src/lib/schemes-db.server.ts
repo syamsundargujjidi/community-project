@@ -45,6 +45,58 @@ let byIdMap = new Map<string, Scheme>();
 let bySlugMap = new Map<string, Scheme>();
 let customAdminOverrides = new Map<string, Partial<Scheme>>();
 
+const DEAD_DOMAIN_MAP: Record<string, string> = {
+  "sbmurban.org": "https://swachhbharatmission.ddws.gov.in/",
+  "pminternship.mca.gov.in": "https://www.myscheme.gov.in/schemes/pmis",
+  "pmsma.nhm.gov.in": "https://pmsma.mohfw.gov.in/",
+  "pmayg.nic.in": "https://pmayg.gov.in/",
+  "nsap.nic.in": "https://nsap.dord.gov.in/",
+  "gramawardsachivalayam.ap.gov.in": "https://ap.gov.in/",
+  "gsws.ap.gov.in": "https://ap.gov.in/",
+  "navasakam.ap.gov.in": "https://ap.gov.in/",
+  "aarogyasri.ap.gov.in": "https://drntrvaidyaseva.ap.gov.in/",
+  "ysraarogyasri.ap.gov.in": "https://drntrvaidyaseva.ap.gov.in/",
+  "aphandlooms.gov.in": "https://ap.gov.in/",
+  "rythubandhu.telangana.gov.in": "https://telangana.gov.in/",
+  "kalia.odisha.gov.in": "https://krushak.odisha.gov.in/",
+  "kanyashree.gov.in": "https://wbkanyashree.gov.in/",
+  "welfarepension.lsgkerala.gov.in": "https://kerala.gov.in/",
+  "www.pmkvyofficial.org": "https://www.skillindiadigital.gov.in/",
+  "pmkvyofficial.org": "https://www.skillindiadigital.gov.in/",
+  "ladkibahin.maharashtra.gov.in": "https://ladakibahin.maharashtra.gov.in/",
+  "enps.nsdl.com": "https://www.jansuraksha.gov.in/",
+};
+
+function sanitizeSchemeLink(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  try {
+    const parsed = new URL(trimmed);
+    const host = parsed.hostname.toLowerCase();
+    const cleanHost = host.startsWith("www.") ? host.slice(4) : host;
+    if (DEAD_DOMAIN_MAP[host]) return DEAD_DOMAIN_MAP[host];
+    if (DEAD_DOMAIN_MAP[cleanHost]) return DEAD_DOMAIN_MAP[cleanHost];
+  } catch {
+    // fallback
+  }
+  for (const [deadDomain, replacement] of Object.entries(DEAD_DOMAIN_MAP)) {
+    if (trimmed.includes(`://${deadDomain}`) || trimmed.includes(`//www.${deadDomain}`)) {
+      return replacement;
+    }
+  }
+  return trimmed;
+}
+
+function isAliveOfficialScheme(s: Scheme): boolean {
+  // Discard schemes marked broken or invalid
+  if (s.link_status === "broken" || s.link_status === "invalid") return false;
+  if (s.link_http_status === 404 || s.link_http_status === 410) return false;
+
+  const url = s.official_website || s.apply_url || s.official_source_url;
+  if (!url || !/^https?:\/\/[^\s]+\.[a-z]{2,}/i.test(url)) return false;
+  return true;
+}
+
 function loadCatalog(): Scheme[] {
   if (cachedSchemes && cachedSchemes.length > 0) return cachedSchemes;
   try {
@@ -55,13 +107,33 @@ function loadCatalog(): Scheme[] {
       if (Array.isArray(list) && list.length > 0) {
         byIdMap.clear();
         bySlugMap.clear();
-        for (const s of list) {
-          const key = s.id || s.slug;
-          byIdMap.set(s.id, s);
-          if (s.slug) bySlugMap.set(s.slug, s);
+        const validList: Scheme[] = [];
+
+        for (const item of list) {
+          if (!isAliveOfficialScheme(item)) continue;
+
+          const sanitized: Scheme = {
+            ...item,
+            official_website: sanitizeSchemeLink(item.official_website),
+            apply_url:
+              sanitizeSchemeLink(item.apply_url) || sanitizeSchemeLink(item.official_website) || "",
+            official_source_url:
+              sanitizeSchemeLink(item.official_source_url) ||
+              sanitizeSchemeLink(item.official_website),
+            link_status:
+              item.link_status === "invalid" || item.link_status === "broken"
+                ? "working"
+                : item.link_status || "working",
+          };
+
+          const key = sanitized.id || sanitized.slug;
+          byIdMap.set(sanitized.id, sanitized);
+          if (sanitized.slug) bySlugMap.set(sanitized.slug, sanitized);
+          validList.push(sanitized);
         }
-        cachedSchemes = list;
-        return list;
+
+        cachedSchemes = validList;
+        return validList;
       }
     }
   } catch (err) {
@@ -70,13 +142,23 @@ function loadCatalog(): Scheme[] {
   // Fallback to in-memory DEFAULT_SCHEMES
   byIdMap.clear();
   bySlugMap.clear();
+  const validDefaults: Scheme[] = [];
   for (const s of DEFAULT_SCHEMES) {
-    const key = s.id || s.slug;
-    byIdMap.set(s.id, s);
-    if (s.slug) bySlugMap.set(s.slug, s);
+    if (!isAliveOfficialScheme(s)) continue;
+    const sanitized: Scheme = {
+      ...s,
+      official_website: sanitizeSchemeLink(s.official_website),
+      apply_url: sanitizeSchemeLink(s.apply_url) || sanitizeSchemeLink(s.official_website) || "",
+      official_source_url:
+        sanitizeSchemeLink(s.official_source_url) || sanitizeSchemeLink(s.official_website),
+    };
+    const key = sanitized.id || sanitized.slug;
+    byIdMap.set(sanitized.id, sanitized);
+    if (sanitized.slug) bySlugMap.set(sanitized.slug, sanitized);
+    validDefaults.push(sanitized);
   }
-  cachedSchemes = DEFAULT_SCHEMES;
-  return DEFAULT_SCHEMES;
+  cachedSchemes = validDefaults;
+  return validDefaults;
 }
 
 export function getAllSchemes(): Scheme[] {
@@ -313,10 +395,14 @@ export function searchSchemes(params: SchemeFilterParams): PaginatedResult<Schem
       if (params.maxIncome > s.max_annual_income) return false;
     }
 
-    // 8. URL Status filter
+    // 8. URL Status filter & 404 elimination
     if (params.urlStatus && params.urlStatus !== "all") {
       const curStatus = s.link_status || "working";
       if (curStatus !== params.urlStatus) return false;
+    } else {
+      // By default, strictly exclude any scheme that has broken or 404 status
+      if (s.link_status === "broken" || s.link_status === "invalid") return false;
+      if (s.link_http_status === 404 || s.link_http_status === 410) return false;
     }
 
     return true;

@@ -23,6 +23,7 @@ export const firebaseConfig = {
   authDomain: appletConfig.authDomain || "scheme-sathi-ai.firebaseapp.com",
   databaseURL:
     (typeof import.meta !== "undefined" && import.meta.env?.VITE_FIREBASE_DATABASE_URL) ||
+    (appletConfig as Record<string, string | undefined>).databaseURL ||
     "https://scheme-sathi-ai-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: appletConfig.projectId || "scheme-sathi-ai",
   storageBucket: appletConfig.storageBucket || "scheme-sathi-ai.firebasestorage.app",

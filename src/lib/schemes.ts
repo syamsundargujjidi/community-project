@@ -296,20 +296,62 @@ export type ResolvedSchemeLink = {
   departmentName: string;
 };
 
+const DEAD_DOMAIN_MAP: Record<string, string> = {
+  "sbmurban.org": "https://swachhbharatmission.ddws.gov.in/",
+  "pminternship.mca.gov.in": "https://www.myscheme.gov.in/schemes/pmis",
+  "pmsma.nhm.gov.in": "https://pmsma.mohfw.gov.in/",
+  "pmayg.nic.in": "https://pmayg.gov.in/",
+  "nsap.nic.in": "https://nsap.dord.gov.in/",
+  "gramawardsachivalayam.ap.gov.in": "https://ap.gov.in/",
+  "gsws.ap.gov.in": "https://ap.gov.in/",
+  "navasakam.ap.gov.in": "https://ap.gov.in/",
+  "aarogyasri.ap.gov.in": "https://drntrvaidyaseva.ap.gov.in/",
+  "ysraarogyasri.ap.gov.in": "https://drntrvaidyaseva.ap.gov.in/",
+  "aphandlooms.gov.in": "https://ap.gov.in/",
+  "rythubandhu.telangana.gov.in": "https://telangana.gov.in/",
+  "kalia.odisha.gov.in": "https://krushak.odisha.gov.in/",
+  "kanyashree.gov.in": "https://wbkanyashree.gov.in/",
+  "welfarepension.lsgkerala.gov.in": "https://kerala.gov.in/",
+  "www.pmkvyofficial.org": "https://www.skillindiadigital.gov.in/",
+  "pmkvyofficial.org": "https://www.skillindiadigital.gov.in/",
+  "ladkibahin.maharashtra.gov.in": "https://ladakibahin.maharashtra.gov.in/",
+  "enps.nsdl.com": "https://www.jansuraksha.gov.in/",
+};
+
+function sanitizeOfficialUrl(url: string | null | undefined): string | null {
+  if (!url || !isValidHttpUrl(url)) return null;
+  const trimmed = url.trim();
+  try {
+    const parsed = new URL(trimmed);
+    const host = parsed.hostname.toLowerCase();
+    const cleanHost = host.startsWith("www.") ? host.slice(4) : host;
+    if (DEAD_DOMAIN_MAP[host]) return DEAD_DOMAIN_MAP[host];
+    if (DEAD_DOMAIN_MAP[cleanHost]) return DEAD_DOMAIN_MAP[cleanHost];
+  } catch {
+    // fallback
+  }
+  for (const [deadDomain, replacement] of Object.entries(DEAD_DOMAIN_MAP)) {
+    if (trimmed.includes(`://${deadDomain}`) || trimmed.includes(`//www.${deadDomain}`)) {
+      return replacement;
+    }
+  }
+  return trimmed;
+}
+
 /**
  * Dynamic link resolution following the strict priority ladder:
  * 1. Exact official scheme application URL
  * 2. Exact official scheme registration URL
  * 3. Official scheme/department website
- * 4. State-specific citizen portal (for AP: gramawardsachivalayam.ap.gov.in)
- * 5. National scheme search fallback (myscheme.gov.in/search?q=...)
+ * 4. State-specific citizen portal (for AP: gsws.ap.gov.in)
+ * 5. National scheme search fallback (myscheme.gov.in/find-scheme)
  */
 export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink {
   const name = scheme.name || "Government Welfare Scheme";
   const state = scheme.state;
   const isAP = state === "Andhra Pradesh";
-  const searchFallback = `https://www.myscheme.gov.in/search?q=${encodeURIComponent(name)}`;
-  const apPortalDefault = "https://gramawardsachivalayam.ap.gov.in/";
+  const searchFallback = "https://www.myscheme.gov.in/find-scheme";
+  const apPortalDefault = "https://ap.gov.in/";
 
   // Candidate URLs in priority order:
   const candidates = [
@@ -323,8 +365,9 @@ export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink 
 
   let chosenPrimary = "";
   for (const c of candidates) {
-    if (isValidHttpUrl(c)) {
-      chosenPrimary = c!.trim();
+    const sanitized = sanitizeOfficialUrl(c);
+    if (sanitized) {
+      chosenPrimary = sanitized;
       break;
     }
   }

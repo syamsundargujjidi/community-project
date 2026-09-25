@@ -1,12 +1,13 @@
 {
   "projectId": "scheme-sathi-ai",
-  "appId": "1:418977626042:web:6790a75eb4e02e3a2c8f83",
+  "appId": "1:418977626042:web:55f55d4db1ceb4572c8f83",
   "apiKey": "AIzaSyDXYaZl9mKDjiu01ugAQ85UZqfuy7k3QCE",
   "authDomain": "scheme-sathi-ai.firebaseapp.com",
+  "databaseURL": "https://scheme-sathi-ai-default-rtdb.asia-southeast1.firebasedatabase.app",
   "firestoreDatabaseId": "ai-studio-schemesathiai-4edf83f6-487b-4255-8f20-4d7b7f1144ad",
   "storageBucket": "scheme-sathi-ai.firebasestorage.app",
   "messagingSenderId": "418977626042",
-  "measurementId": "",
+  "measurementId": "G-CY592V18TJ",
   "oAuthClientId": "418977626042-v7hrimvthkolunc5o0be8drdmnqdu1i8.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
 }
