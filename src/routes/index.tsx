@@ -17,7 +17,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 
-import { schemesQueryOptions } from "@/lib/schemes";
+import { schemesQueryOptions, resolveSchemeLinks } from "@/lib/schemes";
 import farmerBg from "@/assets/theme-farmer.jpg";
 import studentBg from "@/assets/theme-student.jpg";
 import workerBg from "@/assets/theme-worker.jpg";
@@ -278,11 +278,7 @@ function Home() {
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {popular.map((s) => {
-              const offUrl = s.official_source_url || s.official_website || s.apply_url;
-              const isOfficial = !!offUrl && !offUrl.includes("myscheme.gov.in");
-              const targetUrl = isOfficial
-                ? offUrl
-                : `https://www.myscheme.gov.in/search?q=${encodeURIComponent(s.name)}`;
+              const links = resolveSchemeLinks(s);
               return (
                 <article
                   key={s.id}
@@ -298,9 +294,9 @@ function Home() {
                         Official Source
                       </span>
                     </div>
-                    {s.ministry && (
+                    {(s.ministry || links.departmentName) && (
                       <span className="mt-2 text-xs text-muted-foreground line-clamp-1 block">
-                        {s.ministry}
+                        {s.ministry || links.departmentName}
                       </span>
                     )}
                     <h3 className="mt-2 font-display text-lg font-bold">{s.name}</h3>
@@ -309,17 +305,17 @@ function Home() {
                     </p>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between">
-                    <span className="text-[11px] text-muted-foreground">
-                      Last verified: 20/09/2026
+                  <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-muted-foreground truncate">
+                      {s.state || "Central"}
                     </span>
                     <a
-                      href={targetUrl}
+                      href={links.primaryUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:brightness-110 transition shadow-xs"
+                      className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:brightness-110 transition shadow-xs shrink-0"
                     >
-                      Apply Now <ExternalLink className="h-3 w-3" />
+                      {links.primaryLabel} <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
                 </article>

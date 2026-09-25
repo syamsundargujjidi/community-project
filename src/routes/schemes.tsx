@@ -14,6 +14,7 @@ import {
   Sparkles,
   Building2,
   FileCheck2,
+  BookOpen,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { INDIAN_STATES, resolveSchemeLinks, type Scheme, type UserProfile } from "@/lib/schemes";
@@ -544,12 +545,12 @@ function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile
         <div className="mt-3 flex items-center justify-between text-[11px]">
           <span
             className={`inline-flex items-center gap-1 font-semibold ${
-              isOfficial
+              links.isOfficial
                 ? "text-emerald-600 dark:text-emerald-400"
                 : "text-blue-600 dark:text-blue-400"
             }`}
           >
-            {isOfficial ? (
+            {links.isOfficial ? (
               <>
                 <ShieldCheck className="h-3.5 w-3.5" />✓ Official Government Source
               </>
@@ -618,8 +619,8 @@ function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile
                 </div>
               ) : (
                 <p className="text-[11px] text-muted-foreground italic rounded-md border border-dashed border-border/80 p-2">
-                  Document requirements could not be fully verified. Please check the official
-                  scheme guidelines.
+                  Required documents may vary. Please verify the document requirements on the
+                  official scheme portal.
                 </p>
               )}
             </div>
@@ -651,6 +652,18 @@ function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile
             className="inline-flex items-center gap-1 rounded-xl border border-blue-500/30 bg-blue-50 dark:bg-blue-950/20 px-2.5 py-2 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
           >
             <span>{links.backupLabel}</span> <ExternalLink className="h-3 w-3" />
+          </a>
+
+          {/* Wikipedia / Info fallback if unable to view official portals */}
+          <a
+            href={links.wikiUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Search and view scheme background on Wikipedia if portal is unreachable"
+            className="inline-flex items-center gap-1 rounded-xl border border-input bg-secondary/50 px-2.5 py-2 text-xs font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition"
+          >
+            <BookOpen className="h-3 w-3" />
+            <span>Wikipedia</span>
           </a>
         </div>
 

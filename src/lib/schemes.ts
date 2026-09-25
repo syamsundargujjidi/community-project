@@ -132,61 +132,43 @@ export const schemesQueryOptions = queryOptions({
           return fullCatalog;
         }
       } catch (e) {
-        console.warn(
-          "[schemesQueryOptions] Server fetch error, using Firestore/default fallback:",
-          e,
-        );
+        // Server fetch fallback
       }
 
       if (typeof window !== "undefined") {
-        const db = getDb();
-        const col = collection(db, "schemes");
-        const snap = await getDocs(col);
+        try {
+          const db = getDb();
+          const col = collection(db, "schemes");
+          // Short timeout so app never hangs or blocks if Firestore network is unavailable
+          const snapPromise = getDocs(col);
+          const timeoutPromise = new Promise<null>((_, reject) =>
+            setTimeout(() => reject(new Error("Firestore timeout")), 2000),
+          );
+          const snap = (await Promise.race([snapPromise, timeoutPromise])) as any;
 
-        const schemeMap = new Map<string, Scheme>();
-
-        if (!snap.empty) {
-          snap.forEach((d) => {
-            const s = docToScheme(d.id, d.data());
-            schemeMap.set(s.slug || s.id, s);
-          });
-        }
-
-        // Merge all DEFAULT_SCHEMES so new programs are immediately available
-        const missingToSeed: Scheme[] = [];
-        for (const def of DEFAULT_SCHEMES) {
-          const key = def.slug || def.id;
-          if (!schemeMap.has(key)) {
-            schemeMap.set(key, def);
-            missingToSeed.push(def);
+          if (snap && !snap.empty) {
+            const schemeMap = new Map<string, Scheme>();
+            snap.forEach((d: any) => {
+              const s = docToScheme(d.id, d.data());
+              schemeMap.set(s.slug || s.id, s);
+            });
+            for (const def of DEFAULT_SCHEMES) {
+              const key = def.slug || def.id;
+              if (!schemeMap.has(key)) schemeMap.set(key, def);
+            }
+            const list = Array.from(schemeMap.values());
+            list.sort(
+              (a, b) =>
+                (b.is_popular ? 1 : 0) - (a.is_popular ? 1 : 0) || a.name.localeCompare(b.name),
+            );
+            return list;
           }
+        } catch {
+          // Firestore unavailable or offline, smoothly use DEFAULT_SCHEMES
         }
-
-        // Asynchronously persist any missing schemes into Firestore
-        if (missingToSeed.length > 0) {
-          for (const s of missingToSeed) {
-            const docId = s.slug || s.id;
-            setDoc(
-              doc(db, "schemes", docId),
-              {
-                ...s,
-                schemeName: s.name,
-                description: s.short_description,
-                featured: s.is_popular,
-              },
-              { merge: true },
-            ).catch((e) => console.warn(`[schemes] sync error on ${docId}:`, e));
-          }
-        }
-
-        const list = Array.from(schemeMap.values());
-        list.sort(
-          (a, b) => (b.is_popular ? 1 : 0) - (a.is_popular ? 1 : 0) || a.name.localeCompare(b.name),
-        );
-        return list;
       }
-    } catch (err) {
-      console.warn("[schemes] Firestore query failed, falling back to seed schemes:", err);
+    } catch {
+      // fallback
     }
     return DEFAULT_SCHEMES;
   },
@@ -309,6 +291,7 @@ export type ResolvedSchemeLink = {
   primaryLabel: string;
   backupUrl: string;
   backupLabel: string;
+  wikiUrl: string;
   isOfficial: boolean;
   departmentName: string;
 };
@@ -353,11 +336,25 @@ export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink 
 
   const isOfficial = !chosenPrimary.includes("myscheme.gov.in");
 
-  let primaryLabel = "Apply / Register on Official Portal";
+  let primaryLabel = "Apply / Visit Official Portal";
   if (!isOfficial) {
-    primaryLabel = "Apply via myScheme Portal";
-  } else if (chosenPrimary.endsWith(".gov.in/") || chosenPrimary.endsWith(".org/")) {
-    primaryLabel = "Apply / Visit Official Portal";
+    primaryLabel = "View on myScheme Portal";
+  } else {
+    try {
+      const pathname = new URL(chosenPrimary).pathname.toLowerCase();
+      if (
+        pathname.includes("apply") ||
+        pathname.includes("register") ||
+        pathname.includes("registration") ||
+        pathname.includes("form")
+      ) {
+        primaryLabel = "Apply Now";
+      } else {
+        primaryLabel = "Apply / Visit Official Portal";
+      }
+    } catch {
+      primaryLabel = "Apply / Visit Official Portal";
+    }
   }
 
   // Guaranteed working backup URL
@@ -386,11 +383,14 @@ export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink 
         ? `Government of ${state}`
         : "Government of India");
 
+  const wikiUrl = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(name)}`;
+
   return {
     primaryUrl: chosenPrimary,
     primaryLabel,
     backupUrl,
     backupLabel,
+    wikiUrl,
     isOfficial,
     departmentName,
   };

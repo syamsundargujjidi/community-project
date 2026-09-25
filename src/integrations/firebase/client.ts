@@ -7,7 +7,13 @@ import {
   setPersistence,
   type Auth,
 } from "firebase/auth";
-import { getFirestore, type Firestore } from "firebase/firestore";
+import {
+  initializeFirestore,
+  getFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  type Firestore,
+} from "firebase/firestore";
 import { getDatabase, type Database } from "firebase/database";
 import { getAnalytics, isSupported, type Analytics } from "firebase/analytics";
 import appletConfig from "../../../firebase-applet-config.json";
@@ -54,10 +60,49 @@ export function getFirebaseAuth(): Auth {
 export function getDb(): Firestore {
   if (_db) return _db;
   const app = getFirebaseApp();
-  // Pass database ID if configured for multi-database or named database instance
-  _db = appletConfig.firestoreDatabaseId
-    ? getFirestore(app, appletConfig.firestoreDatabaseId)
-    : getFirestore(app);
+  const dbId = appletConfig.firestoreDatabaseId || undefined;
+
+  // Use initializeFirestore with long-polling and multi-tab persistent cache
+  // to prevent WebChannel stream disconnections in browser sandboxes/proxies
+  if (typeof window !== "undefined") {
+    try {
+      _db = initializeFirestore(
+        app,
+        {
+          experimentalAutoDetectLongPolling: true,
+          localCache: persistentLocalCache({
+            tabManager: persistentMultipleTabManager(),
+          }),
+        },
+        dbId,
+      );
+      return _db;
+    } catch {
+      try {
+        _db = initializeFirestore(
+          app,
+          {
+            experimentalAutoDetectLongPolling: true,
+          },
+          dbId,
+        );
+        return _db;
+      } catch {
+        try {
+          _db = dbId ? getFirestore(app, dbId) : getFirestore(app);
+        } catch {
+          _db = getFirestore(app);
+        }
+        return _db;
+      }
+    }
+  }
+
+  try {
+    _db = dbId ? getFirestore(app, dbId) : getFirestore(app);
+  } catch {
+    _db = getFirestore(app);
+  }
   return _db;
 }
 
