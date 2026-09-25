@@ -338,20 +338,316 @@ function sanitizeOfficialUrl(url: string | null | undefined): string | null {
   return trimmed;
 }
 
+interface RelatedPortal {
+  url: string;
+  label: string;
+}
+
+/**
+ * Resolves a scheme-specific related departmental/ministry portal
+ * so that schemes do not all share the same generic fallback portal.
+ */
+function resolveRelatedPortal(
+  scheme: Partial<Scheme>,
+  primaryUrl: string,
+  schemeName: string,
+): RelatedPortal {
+  const isAP = scheme.state === "Andhra Pradesh";
+  const state = scheme.state;
+  const category = (scheme.category || "").toLowerCase();
+  const ministry = (scheme.ministry || "").toLowerCase();
+  const department = (scheme.department || "").toLowerCase();
+  const name = schemeName.toLowerCase();
+
+  const isDifferent = (url: string | null | undefined): url is string => {
+    if (!url || !isValidHttpUrl(url)) return false;
+    try {
+      const u1 = new URL(url.trim());
+      const u2 = new URL(primaryUrl.trim());
+      return (
+        u1.hostname !== u2.hostname ||
+        (u1.pathname !== u2.pathname && u1.pathname !== "/" && u2.pathname !== "/")
+      );
+    } catch {
+      return url.trim() !== primaryUrl.trim();
+    }
+  };
+
+  // 1. If custom fallbackUrl is valid and different
+  if (scheme.fallbackUrl && isDifferent(scheme.fallbackUrl)) {
+    return {
+      url: scheme.fallbackUrl.trim(),
+      label: scheme.ministry ? `${scheme.ministry} Portal` : "Official Reference Portal",
+    };
+  }
+
+  // 2. If the scheme has an alternate official source/website that differs from the primary apply URL
+  const altCandidates = [
+    scheme.official_website,
+    scheme.official_source_url,
+    scheme.officialInfoUrl,
+  ];
+  for (const alt of altCandidates) {
+    const sanitized = sanitizeOfficialUrl(alt);
+    if (sanitized && isDifferent(sanitized)) {
+      let label = "Department Official Portal";
+      if (scheme.ministry) label = `${scheme.ministry} Portal`;
+      else if (scheme.department) label = `${scheme.department} Portal`;
+      return { url: sanitized, label };
+    }
+  }
+
+  // 3. Andhra Pradesh state departmental portals
+  if (isAP) {
+    if (
+      category.includes("health") ||
+      name.includes("aarogya") ||
+      name.includes("vaidya") ||
+      name.includes("medical")
+    ) {
+      const url = "https://hmfw.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Health & Family Welfare" };
+    }
+    if (
+      category.includes("agri") ||
+      name.includes("farmer") ||
+      name.includes("crop") ||
+      name.includes("rythu") ||
+      name.includes("karshak")
+    ) {
+      const url = "https://karshak.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Karshak Agri Portal" };
+    }
+    if (
+      category.includes("social") ||
+      category.includes("pension") ||
+      name.includes("pension") ||
+      name.includes("bharosa") ||
+      name.includes("oap")
+    ) {
+      const url = "https://sspensions.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Social Pensions Portal" };
+    }
+    if (
+      category.includes("edu") ||
+      category.includes("scholar") ||
+      name.includes("vidya") ||
+      name.includes("thalliki") ||
+      name.includes("school") ||
+      name.includes("jnanabhumi")
+    ) {
+      const url = "https://jnanabhumi.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Jnanabhumi Education" };
+    }
+    if (
+      category.includes("hous") ||
+      name.includes("housing") ||
+      name.includes("awas") ||
+      name.includes("illu")
+    ) {
+      const url = "https://housing.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Housing Portal" };
+    }
+    if (
+      category.includes("skill") ||
+      category.includes("employ") ||
+      name.includes("skill") ||
+      name.includes("employment")
+    ) {
+      const url = "https://www.apssdc.in/";
+      if (isDifferent(url)) return { url, label: "AP Skill Mission (APSSDC)" };
+    }
+    if (
+      name.includes("ration") ||
+      name.includes("rice") ||
+      name.includes("civil supplies") ||
+      name.includes("food")
+    ) {
+      const url = "https://civilsupplies.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Civil Supplies Portal" };
+    }
+    if (
+      name.includes("transport") ||
+      name.includes("auto") ||
+      name.includes("driver") ||
+      name.includes("vahan")
+    ) {
+      const url = "https://aptransport.org/";
+      if (isDifferent(url)) return { url, label: "AP Transport Portal" };
+    }
+    if (category.includes("women") || name.includes("mahila") || name.includes("child")) {
+      const url = "https://wdcw.ap.gov.in/";
+      if (isDifferent(url)) return { url, label: "AP Women & Child Dept" };
+    }
+    if (isDifferent("https://ap.gov.in/")) {
+      return { url: "https://ap.gov.in/", label: "AP Government State Portal" };
+    }
+  }
+
+  // 4. Other States Departmental & State Portals
+  if (state && state !== "All" && state !== "Central") {
+    const statePortals: Record<string, { url: string; label: string }> = {
+      Telangana: { url: "https://telangana.gov.in/", label: "Telangana State Portal" },
+      Karnataka: { url: "https://sevasindhu.karnataka.gov.in/", label: "Karnataka Seva Sindhu" },
+      "Tamil Nadu": { url: "https://www.tn.gov.in/", label: "Tamil Nadu State Portal" },
+      Maharashtra: {
+        url: "https://aaplesarkar.mahaonline.gov.in/",
+        label: "Aaple Sarkar Maharashtra",
+      },
+      Rajasthan: {
+        url: "https://janinformation.rajasthan.gov.in/",
+        label: "Jan Soochna Rajasthan",
+      },
+      "Uttar Pradesh": { url: "https://edistrict.up.gov.in/", label: "UP eDistrict Portal" },
+      Bihar: { url: "https://serviceonline.bihar.gov.in/", label: "RTPS Bihar Portal" },
+      Odisha: { url: "https://krushak.odisha.gov.in/", label: "Odisha Citizen Portal" },
+      "Madhya Pradesh": { url: "https://mp.gov.in/", label: "MP State Portal" },
+      "West Bengal": { url: "https://wb.gov.in/", label: "WB Citizen Portal" },
+      Kerala: { url: "https://kerala.gov.in/", label: "Kerala eServices Portal" },
+      Gujarat: { url: "https://gujaratindia.gov.in/", label: "Gujarat State Portal" },
+      Punjab: { url: "https://punjab.gov.in/", label: "Punjab State Portal" },
+      Haryana: { url: "https://haryana.gov.in/", label: "Haryana Antyodaya Portal" },
+      Assam: { url: "https://assam.gov.in/", label: "Assam State Portal" },
+      Delhi: { url: "https://edistrict.delhigovt.nic.in/", label: "Delhi eDistrict Portal" },
+    };
+    if (statePortals[state] && isDifferent(statePortals[state].url)) {
+      return statePortals[state];
+    }
+  }
+
+  // 5. Ministry-Specific Verified Portals
+  if (ministry.includes("agri") || department.includes("agri")) {
+    const url = "https://agricoop.nic.in/";
+    if (isDifferent(url)) return { url, label: "Ministry of Agriculture" };
+  }
+  if (ministry.includes("health") || department.includes("health")) {
+    const url = "https://mohfw.gov.in/";
+    if (isDifferent(url)) return { url, label: "MoHFW Health Portal" };
+  }
+  if (ministry.includes("education") || ministry.includes("human resource")) {
+    const url = "https://www.education.gov.in/";
+    if (isDifferent(url)) return { url, label: "Ministry of Education" };
+  }
+  if (ministry.includes("housing") || ministry.includes("urban")) {
+    const url = "https://mohua.gov.in/";
+    if (isDifferent(url)) return { url, label: "MoHUA Urban Portal" };
+  }
+  if (ministry.includes("rural")) {
+    const url = "https://rural.nic.in/";
+    if (isDifferent(url)) return { url, label: "Ministry of Rural Dev" };
+  }
+  if (ministry.includes("social justice") || ministry.includes("empowerment")) {
+    const url = "https://socialjustice.gov.in/";
+    if (isDifferent(url)) return { url, label: "Social Justice Ministry" };
+  }
+  if (ministry.includes("women") || ministry.includes("child")) {
+    const url = "https://wcd.nic.in/";
+    if (isDifferent(url)) return { url, label: "Women & Child Dev Portal" };
+  }
+  if (ministry.includes("skill") || ministry.includes("entrepreneurship")) {
+    const url = "https://msde.gov.in/";
+    if (isDifferent(url)) return { url, label: "Skill Development Ministry" };
+  }
+  if (ministry.includes("msme") || ministry.includes("small enterprise")) {
+    const url = "https://msme.gov.in/";
+    if (isDifferent(url)) return { url, label: "Ministry of MSME Portal" };
+  }
+  if (ministry.includes("labour") || ministry.includes("employment")) {
+    const url = "https://labour.gov.in/";
+    if (isDifferent(url)) return { url, label: "Labour & Employment Ministry" };
+  }
+  if (ministry.includes("finance") || department.includes("financial")) {
+    const url = "https://financialservices.gov.in/";
+    if (isDifferent(url)) return { url, label: "Dept of Financial Services" };
+  }
+  if (ministry.includes("tribal")) {
+    const url = "https://tribal.nic.in/";
+    if (isDifferent(url)) return { url, label: "Tribal Affairs Ministry" };
+  }
+  if (ministry.includes("minority")) {
+    const url = "https://minorityaffairs.gov.in/";
+    if (isDifferent(url)) return { url, label: "Minority Affairs Ministry" };
+  }
+  if (ministry.includes("renewable") || ministry.includes("energy")) {
+    const url = "https://mnre.gov.in/";
+    if (isDifferent(url)) return { url, label: "Renewable Energy Ministry" };
+  }
+  if (ministry.includes("electronics") || ministry.includes("it") || ministry.includes("meity")) {
+    const url = "https://www.meity.gov.in/";
+    if (isDifferent(url)) return { url, label: "MeitY Digital India" };
+  }
+
+  // 6. Category-Specific Central Portals
+  if (category.includes("health")) {
+    const url = "https://nha.gov.in/";
+    if (isDifferent(url)) return { url, label: "National Health Authority" };
+  }
+  if (category.includes("agri")) {
+    const url = "https://agricoop.nic.in/";
+    if (isDifferent(url)) return { url, label: "National Agriculture Portal" };
+  }
+  if (category.includes("edu") || category.includes("scholar")) {
+    const url = "https://scholarships.gov.in/";
+    if (isDifferent(url)) return { url, label: "National Scholarship Portal" };
+  }
+  if (category.includes("pension") || category.includes("social")) {
+    const url = "https://nsap.nic.in/";
+    if (isDifferent(url)) return { url, label: "National Social Assistance (NSAP)" };
+  }
+  if (category.includes("hous")) {
+    const url = "https://pmay-urban.gov.in/";
+    if (isDifferent(url)) return { url, label: "PMAY Housing Portal" };
+  }
+  if (category.includes("skill") || category.includes("employ")) {
+    const url = "https://www.ncs.gov.in/";
+    if (isDifferent(url)) return { url, label: "National Career Service (NCS)" };
+  }
+  if (category.includes("msme") || category.includes("business")) {
+    const url = "https://msme.gov.in/";
+    if (isDifferent(url)) return { url, label: "Ministry of MSME Portal" };
+  }
+  if (category.includes("disability") || category.includes("inclusion")) {
+    const url = "https://www.swavlambancard.gov.in/";
+    if (isDifferent(url)) return { url, label: "UDID Disability Portal" };
+  }
+  if (category.includes("women") || category.includes("child")) {
+    const url = "https://wcd.nic.in/";
+    if (isDifferent(url)) return { url, label: "Women & Child Dev Portal" };
+  }
+  if (category.includes("financial")) {
+    const url = "https://dbtbharat.gov.in/";
+    if (isDifferent(url)) return { url, label: "DBT Bharat Welfare Portal" };
+  }
+
+  // 7. Scheme-specific targeted search on myScheme
+  const searchUrl = `https://www.myscheme.gov.in/search?q=${encodeURIComponent(schemeName)}`;
+  if (isDifferent(searchUrl)) {
+    return {
+      url: searchUrl,
+      label: scheme.category ? `myScheme ${scheme.category} Guide` : "myScheme Verification Guide",
+    };
+  }
+
+  return {
+    url: "https://www.india.gov.in/",
+    label: "National Portal of India",
+  };
+}
+
 /**
  * Dynamic link resolution following the strict priority ladder:
  * 1. Exact official scheme application URL
  * 2. Exact official scheme registration URL
  * 3. Official scheme/department website
- * 4. State-specific citizen portal (for AP: gsws.ap.gov.in)
- * 5. National scheme search fallback (myscheme.gov.in/find-scheme)
+ * 4. Scheme-relevant departmental/state/ministry portal
+ * 5. Targeted myScheme search guide
  */
 export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink {
   const name = scheme.name || "Government Welfare Scheme";
   const state = scheme.state;
   const isAP = state === "Andhra Pradesh";
-  const searchFallback = "https://www.myscheme.gov.in/find-scheme";
   const apPortalDefault = "https://ap.gov.in/";
+  const searchFallback = "https://www.myscheme.gov.in/search?q=" + encodeURIComponent(name);
 
   // Candidate URLs in priority order:
   const candidates = [
@@ -400,22 +696,10 @@ export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink 
     }
   }
 
-  // Guaranteed working backup URL
-  let backupUrl =
-    scheme.fallbackUrl && isValidHttpUrl(scheme.fallbackUrl)
-      ? scheme.fallbackUrl.trim()
-      : searchFallback;
-  let backupLabel = "myScheme National Backup";
-
-  if (chosenPrimary === backupUrl) {
-    if (isAP) {
-      backupUrl = apPortalDefault;
-      backupLabel = "AP Government Citizen Portal";
-    } else {
-      backupUrl = "https://www.india.gov.in/";
-      backupLabel = "National Portal of India";
-    }
-  }
+  // Dynamic scheme-specific related backup portal:
+  const related = resolveRelatedPortal(scheme, chosenPrimary, name);
+  const backupUrl = related.url;
+  const backupLabel = related.label;
 
   const departmentName =
     scheme.department ||

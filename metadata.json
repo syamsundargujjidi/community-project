@@ -1,7 +1,5 @@
 {
   "name": "Scheme Sathi AI",
   "description": "Discover Central & State government schemes you are eligible for with personalized recommendations, multilingual support, and an AI assistant.",
-  "capabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
