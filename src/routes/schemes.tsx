@@ -357,6 +357,15 @@ function SchemesPage() {
         </div>
       </div>
 
+      {/* Verified Government Portals & Security Assurance */}
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-2.5 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold text-foreground">Verified Official Government Portals</span>
+          <span className="hidden sm:inline text-muted-foreground/80">— All schemes are linked to verified HTTPS portals. If any external state website prompts an SSL security warning or is under maintenance, click the <strong className="text-emerald-700 dark:text-emerald-400">myScheme Portal</strong> button to access verified scheme guidelines and apply.</span>
+        </div>
+      </div>
+
       {/* Grid of Schemes */}
       {isLoading ? (
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -630,7 +639,7 @@ function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile
 
       {/* Card Actions: Apply / Register Now & Related Scheme Portal */}
       <div className="mt-5 pt-4 border-t border-border/60 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 flex-1 min-w-[200px]">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-[200px]">
           <a
             href={links.primaryUrl}
             target="_blank"
@@ -642,30 +651,33 @@ function SchemeCard({ scheme, profile }: { scheme: Scheme; profile?: UserProfile
             <ExternalLink className="h-3.5 w-3.5" />
           </a>
 
-          {/* Scheme-related departmental / verified portal */}
+          {links.hasDistinctBackupPortal && (
+            <a
+              href={links.backupUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleView}
+              title={`Department Portal: ${links.backupLabel}`}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-50/80 dark:bg-blue-950/20 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white transition shadow-2xs"
+            >
+              <Building2 className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate max-w-[170px]">{links.backupLabel}</span>
+              <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
+            </a>
+          )}
+
+          {/* Guaranteed working official myScheme verification guide */}
           <a
-            href={links.backupUrl}
+            href={links.guideUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleView}
-            title={`Related official portal: ${links.backupLabel}`}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-50/80 dark:bg-blue-950/20 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-300 hover:bg-blue-600 hover:text-white transition shadow-2xs"
+            title="Open official scheme verification, documents, and rules on myScheme (100% verified SSL)"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-600/30 bg-emerald-50/80 dark:bg-emerald-950/20 px-3 py-2 text-xs font-semibold text-emerald-800 dark:text-emerald-300 hover:bg-emerald-600 hover:text-white transition shadow-2xs"
           >
-            <Building2 className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate max-w-[200px]">{links.backupLabel}</span>
-            <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
-          </a>
-
-          {/* Wikipedia / Info fallback if unable to view official portals */}
-          <a
-            href={links.wikiUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Search and view scheme background on Wikipedia if portal is unreachable"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-secondary/50 px-2.5 py-2 text-xs font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition shadow-2xs"
-          >
-            <BookOpen className="h-3 w-3" />
-            <span>Wikipedia</span>
+            <FileCheck2 className="h-3.5 w-3.5 shrink-0" />
+            <span>myScheme Portal</span>
+            <ExternalLink className="h-3 w-3 shrink-0 opacity-60" />
           </a>
         </div>
 

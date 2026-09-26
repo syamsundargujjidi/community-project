@@ -286,14 +286,19 @@ export function isValidHttpUrl(url?: string | null): boolean {
   return true;
 }
 
+import { resolveSchemePortals, sanitizePortalUrl, SAFE_SECURE_REPLACEMENTS } from "./portal-resolver";
+
 export type ResolvedSchemeLink = {
   primaryUrl: string;
   primaryLabel: string;
   backupUrl: string;
   backupLabel: string;
+  guideUrl: string;
+  guideLabel: string;
   wikiUrl: string;
   isOfficial: boolean;
   departmentName: string;
+  hasDistinctBackupPortal: boolean;
 };
 
 const DEAD_DOMAIN_MAP: Record<string, string> = {
@@ -320,22 +325,7 @@ const DEAD_DOMAIN_MAP: Record<string, string> = {
 
 function sanitizeOfficialUrl(url: string | null | undefined): string | null {
   if (!url || !isValidHttpUrl(url)) return null;
-  const trimmed = url.trim();
-  try {
-    const parsed = new URL(trimmed);
-    const host = parsed.hostname.toLowerCase();
-    const cleanHost = host.startsWith("www.") ? host.slice(4) : host;
-    if (DEAD_DOMAIN_MAP[host]) return DEAD_DOMAIN_MAP[host];
-    if (DEAD_DOMAIN_MAP[cleanHost]) return DEAD_DOMAIN_MAP[cleanHost];
-  } catch {
-    // fallback
-  }
-  for (const [deadDomain, replacement] of Object.entries(DEAD_DOMAIN_MAP)) {
-    if (trimmed.includes(`://${deadDomain}`) || trimmed.includes(`//www.${deadDomain}`)) {
-      return replacement;
-    }
-  }
-  return trimmed;
+  return sanitizePortalUrl(url);
 }
 
 interface RelatedPortal {
@@ -643,83 +633,29 @@ function resolveRelatedPortal(
  * 5. Targeted myScheme search guide
  */
 export function resolveSchemeLinks(scheme: Partial<Scheme>): ResolvedSchemeLink {
-  const name = scheme.name || "Government Welfare Scheme";
-  const state = scheme.state;
-  const isAP = state === "Andhra Pradesh";
-  const apPortalDefault = "https://ap.gov.in/";
-  const searchFallback = "https://www.myscheme.gov.in/search?q=" + encodeURIComponent(name);
+  const p = resolveSchemePortals(scheme);
 
-  // Candidate URLs in priority order:
-  const candidates = [
-    scheme.applicationUrl,
-    scheme.apply_url,
-    scheme.registrationUrl,
-    scheme.official_website,
-    scheme.official_source_url,
-    scheme.officialInfoUrl,
-  ];
+  let backupUrl = p.guideUrl;
+  let backupLabel = p.guideLabel;
+  let hasDistinctBackupPortal = false;
 
-  let chosenPrimary = "";
-  for (const c of candidates) {
-    const sanitized = sanitizeOfficialUrl(c);
-    if (sanitized) {
-      chosenPrimary = sanitized;
-      break;
-    }
+  if (p.hasDistinctDeptPortal && p.deptUrl) {
+    backupUrl = p.deptUrl;
+    backupLabel = p.deptLabel || "Department Portal";
+    hasDistinctBackupPortal = true;
   }
-
-  // Fallback if no valid candidate found
-  if (!chosenPrimary) {
-    chosenPrimary = isAP ? apPortalDefault : searchFallback;
-  }
-
-  const isOfficial = !chosenPrimary.includes("myscheme.gov.in");
-
-  let primaryLabel = "Apply / Visit Official Portal";
-  if (!isOfficial) {
-    primaryLabel = "View on myScheme Portal";
-  } else {
-    try {
-      const pathname = new URL(chosenPrimary).pathname.toLowerCase();
-      if (
-        pathname.includes("apply") ||
-        pathname.includes("register") ||
-        pathname.includes("registration") ||
-        pathname.includes("form")
-      ) {
-        primaryLabel = "Apply Now";
-      } else {
-        primaryLabel = "Apply / Visit Official Portal";
-      }
-    } catch {
-      primaryLabel = "Apply / Visit Official Portal";
-    }
-  }
-
-  // Dynamic scheme-specific related backup portal:
-  const related = resolveRelatedPortal(scheme, chosenPrimary, name);
-  const backupUrl = related.url;
-  const backupLabel = related.label;
-
-  const departmentName =
-    scheme.department ||
-    scheme.ministry ||
-    (isAP
-      ? "Government of Andhra Pradesh"
-      : state
-        ? `Government of ${state}`
-        : "Government of India");
-
-  const wikiUrl = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(name)}`;
 
   return {
-    primaryUrl: chosenPrimary,
-    primaryLabel,
+    primaryUrl: p.primaryUrl,
+    primaryLabel: p.primaryLabel,
     backupUrl,
     backupLabel,
-    wikiUrl,
-    isOfficial,
-    departmentName,
+    guideUrl: p.guideUrl,
+    guideLabel: p.guideLabel,
+    wikiUrl: p.wikiUrl,
+    isOfficial: p.isOfficial,
+    departmentName: p.departmentName,
+    hasDistinctBackupPortal,
   };
 }
 

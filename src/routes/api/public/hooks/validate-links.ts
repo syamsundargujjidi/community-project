@@ -11,12 +11,17 @@ import {
 } from "firebase/firestore";
 import { getDb } from "@/integrations/firebase/client";
 import { checkOfficialLink } from "@/lib/link-check.server";
+import { isFirestoreQuotaExhausted, isQuotaError } from "@/integrations/firebase/user-store";
 
 const JOB_ID = "link_validation";
 const BATCH_SIZE = 25;
 const LEASE_MINUTES = 10;
 
 async function handle() {
+  if (isFirestoreQuotaExhausted()) {
+    return Response.json({ ok: true, skipped: "quota_paused", reason: "Firestore daily write quota reached" });
+  }
+
   const db = getDb();
   const jobRef = doc(db, "jobs", JOB_ID);
   const now = new Date();
@@ -28,6 +33,9 @@ async function handle() {
       jobData = jobSnap.data() || {};
     }
   } catch (err) {
+    if (isQuotaError(err)) {
+      return Response.json({ ok: true, skipped: "quota_paused" });
+    }
     console.warn("[validate-links] job snap fetch:", err);
   }
 
@@ -40,15 +48,21 @@ async function handle() {
   }
 
   const leaseUntil = new Date(now.getTime() + LEASE_MINUTES * 60_000).toISOString();
-  await setDoc(
-    jobRef,
-    {
-      job_name: JOB_ID,
-      lease_until: leaseUntil,
-      last_run_at: now.toISOString(),
-    },
-    { merge: true },
-  );
+  try {
+    await setDoc(
+      jobRef,
+      {
+        job_name: JOB_ID,
+        lease_until: leaseUntil,
+        last_run_at: now.toISOString(),
+      },
+      { merge: true },
+    );
+  } catch (err) {
+    if (isQuotaError(err)) {
+      return Response.json({ ok: true, skipped: "quota_paused" });
+    }
+  }
 
   let checked = 0;
   let invalid = 0;

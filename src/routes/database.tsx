@@ -401,7 +401,8 @@ function DatabaseDashboard() {
               </tr>
             ) : (
               schemes.map((s) => {
-                const offUrl = s.official_source_url || s.official_website || s.apply_url;
+                const links = resolveSchemeLinks(s);
+                const offUrl = links.primaryUrl;
                 const isWorking = s.link_status !== "broken" && s.link_status !== "invalid";
                 const isAct = s.active !== false && s.scheme_status !== "Inactive";
 

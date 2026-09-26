@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Answer a few simple questions and instantly find Central & State government schemes you're eligible for. 100% free.",
+          "Discover Central & State government schemes you are eligible for with personalized recommendations, multilingual support, and an AI assistant.",
       },
       { name: "author", content: "Scheme Sathi AI" },
       {
@@ -90,7 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Answer a few simple questions and instantly find Central & State government schemes you're eligible for. 100% free.",
+          "Discover Central & State government schemes you are eligible for with personalized recommendations, multilingual support, and an AI assistant.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
